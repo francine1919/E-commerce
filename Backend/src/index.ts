@@ -9,6 +9,7 @@ import { feedbackRouter } from "./routes/feedbackRouter";
 import { evaluationRouter } from "./routes/evaluationRouter";
 import { compiledRouter } from "./routes/compiledEvaluationRouter";
 import { initRouter } from "./routes/initRouter";
+import { productRouter } from "./routes/productRouter";
 
 dotenv.config();
 const app = express();
@@ -16,12 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/team", teamRouter);
-app.use("/responsible", responsibleRouter);
-app.use("/leaguer", leaguerRouter);
-app.use("/feedback", feedbackRouter);
-app.use("/evaluation", evaluationRouter);
-app.use("/compiled", compiledRouter);
+app.use("/stock", productRouter);
 app.use("", initRouter);
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {

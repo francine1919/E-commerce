@@ -1,3 +1,9 @@
+//get stock
+GET http://localhost:3003/stock/all
+Content-Type: application/json
+
+
+####
 //cadastrar responsáveis
 POST http://localhost:3003/responsible/signup
 Content-Type: application/json

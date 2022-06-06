@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { FeedbackBusiness } from "../business/FeedbackBusiness";
 import { FeedbackInputDTO } from "../model/Feedback";
-import { transporter } from "../services/Transporter";
+
 
 export class FeedbackController {
   async createFeedback(req: Request, res: Response) {
@@ -17,7 +17,7 @@ export class FeedbackController {
       //creating feedback request in databank
       const feedbackBusiness = new FeedbackBusiness();
       const token = await feedbackBusiness.createFeedback(input, token_headers);
-      await transporter(input.email_evaluators);
+
       res.status(201).send({
         message: "Avaliação criada!",
         token: token,
