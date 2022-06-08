@@ -15,3 +15,9 @@ shoppingListRouter.put(
   "/decrease",
   shoppingListController.decreaseProductQuantityFromShoppingList
 );
+
+//delete product from shopping list
+shoppingListRouter.delete(
+  "/delete",
+  shoppingListController.deleteProductFromShoppingList
+);

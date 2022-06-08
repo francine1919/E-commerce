@@ -25,4 +25,5 @@ export class Product {
   static toProductModelStock(prod: any) {
     return { name: prod.name, qty_stock: prod.qty_stock };
   }
+
 }

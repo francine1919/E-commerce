@@ -4,7 +4,7 @@ import { BaseDatabase } from "./BaseDatabase";
 export class ProductDatabase extends BaseDatabase {
   private static TABLE_NAME = "products";
 
-  getCurrentStock = async () => {
+  public getCurrentStock = async () => {
     try {
       const productsInStock = await this.connection(ProductDatabase.TABLE_NAME)
         .select("*")
@@ -17,5 +17,20 @@ export class ProductDatabase extends BaseDatabase {
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
     }
+  };
+
+  public getProductById = async (id: string) => {
+    const product = await this.connection(ProductDatabase.TABLE_NAME)
+      .select("*")
+      .where({ id: id });
+    return product[0] && Product.toProductModel(product[0]);
+  };
+
+  public getProductPriceById = async (id: string) => {
+    const productPrice = await this.connection(ProductDatabase.TABLE_NAME)
+      .select("price")
+      .where({ id: id });
+      console.log(productPrice[0])
+    return productPrice[0].price;
   };
 }

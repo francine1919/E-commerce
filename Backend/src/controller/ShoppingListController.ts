@@ -41,56 +41,24 @@ export class ShoppingListController {
       if (error instanceof Error) {
         return res.status(400).send(error.message);
       }
-      res
-        .status(500)
-        .send("Erro ao criar lista de compras. Por favor tente novamente.");
+      res.status(500).send("Erro, por favor tente novamente.");
     }
   }
-  //   async login(req: Request, res: Response) {
-  //     try {
-  //       const input: LoginInputDTO = {
-  //         email: req.body.email,
-  //         password: req.body.password,
-  //       };
+  async deleteProductFromShoppingList(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization as string;
+      const input: ShoppingListInputDTO = {
+        user_id_product: req.body.user_id_product,
+      };
 
-  //       const token = await responsibleBusiness.login(input);
+      await shoppingListBusiness.deleteProductFromShoppingList(input, token);
 
-  //       res.status(200).send({ message: "Usuário logado", token: token });
-  //     } catch (error: any) {
-  //       res.status(400).send({ error: error.message });
-  //     }
-  //   }
-
-  //   async editRole(req: Request, res: Response) {
-  //     try {
-  //       const tokenHeaders = req.headers.authorization as string;
-
-  //       const input: RoleInputDTO = {
-  //         id: req.body.id,
-  //         role: req.body.role,
-  //       };
-
-  //       const role = await responsibleBusiness.editRole(input, tokenHeaders);
-
-  //       res
-  //         .status(200)
-  //         .send({ message: "Role alterado com sucesso!", token: role });
-  //     } catch (error: any) {
-  //       res.status(400).send({ error: error.message });
-  //     }
-  //   }
-
-  //   async getAllResponsibles(req: Request, res: Response): Promise<void> {
-  //     try {
-  //       const token_headers = req.headers.authorization as string;
-
-  //       const responsibleBusiness = new ResponsibleBusiness();
-  //       const responsible = await responsibleBusiness.getAllResponsibles(
-  //         token_headers
-  //       );
-  //       res.status(200).send(responsible);
-  //     } catch (error: any) {
-  //       res.status(400).send({ error: error.message });
-  //     }
-  //   }
+      res.status(200).send("Deletado com sucesso.");
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).send(error.message);
+      }
+      res.status(500).send("Erro, por favor tente novamente.");
+    }
+  }
 }

@@ -6,13 +6,17 @@ export class ShoppingListDatabase extends BaseDatabase {
 
   public async addProductsToShoppingList(
     user_id: string,
-    user_id_product: string
+    user_id_product: string,
+    prod_qtd: number,
+    total: number
   ): Promise<void> {
     try {
       await this.connection(ShoppingListDatabase.TABLE_NAME)
         .insert({
           user_id,
           user_id_product,
+          prod_qtd,
+          total,
         })
         .into(ShoppingListDatabase.TABLE_NAME);
     } catch (err: any) {
@@ -23,7 +27,7 @@ export class ShoppingListDatabase extends BaseDatabase {
   public async getProductInShoppingList(
     user_id: string,
     user_id_product: string
-  ) {
+  ): Promise<ShoppingList> {
     try {
       const result = await this.connection(ShoppingListDatabase.TABLE_NAME)
         .select("*")
@@ -37,11 +41,12 @@ export class ShoppingListDatabase extends BaseDatabase {
   public async increaseProductQuantityInShoppingList(
     prod_qtd: number,
     user_id: string,
-    user_id_product: string
+    user_id_product: string,
+    total: number
   ): Promise<void> {
     try {
       await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .update({ prod_qtd: prod_qtd + 1 })
+        .update({ prod_qtd: prod_qtd + 1, total: total * prod_qtd })
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id, user_id_product: user_id_product });
     } catch (err: any) {
@@ -51,28 +56,42 @@ export class ShoppingListDatabase extends BaseDatabase {
   public async decreaseProductQuantityInShoppingList(
     prod_qtd: number,
     user_id: string,
-    user_id_product: string
+    user_id_product: string,
+    total: number
   ): Promise<void> {
     try {
       await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .update({ prod_qtd: prod_qtd - 1 })
+        .update({ prod_qtd: prod_qtd - 1, total: total * prod_qtd })
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id, user_id_product: user_id_product });
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
     }
   }
-  //   public async getTeamByName(name: string) {
-  //     try {
-  //       const result = await this.connection(TeamDatabase.TABLE_NAME)
-  //         .select("*")
-  //         .from(TeamDatabase.TABLE_NAME)
-  //         .where({ team_name: name });
-  //       return result[0] && Team.toTeamModel(result[0]);
-  //     } catch (err: any) {
-  //       throw new Error(err.sqlMessage || err.message);
-  //     }
-  //   }
+  public async deleteProductFromShoppingListById(
+    user_id_product: string
+  ): Promise<void> {
+    try {
+      await this.connection(ShoppingListDatabase.TABLE_NAME)
+        .delete()
+        .from(ShoppingListDatabase.TABLE_NAME)
+        .where({ user_id_product: user_id_product });
+    } catch (err: any) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
+
+  public async getShoppingList(user_id: string): Promise<ShoppingList> {
+    try {
+      const result = await this.connection(ShoppingListDatabase.TABLE_NAME)
+        .select("*")
+        .from(ShoppingListDatabase.TABLE_NAME)
+        .where({ user_id: user_id });
+      return result[0] && ShoppingList.toShoppingListModel(result[0]);
+    } catch (err: any) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
   //   public async getAllTeams(): Promise<Team[]> {
   //     try {
   //       const allTeamsData = await this.connection(
