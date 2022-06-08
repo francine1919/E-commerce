@@ -3,7 +3,6 @@ import { USER_ROLES } from "../model/User_Roles";
 
 export type AuthenticationData = {
   id: string;
-  role: USER_ROLES;
 };
 
 export class Authenticator {

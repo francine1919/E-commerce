@@ -22,8 +22,7 @@ export class Product {
   static toProductModel(prod: any): Product {
     return new Product(prod.id, prod.name, prod.price, prod.qty_stock);
   }
+  static toProductModelStock(prod: any) {
+    return { name: prod.name, qty_stock: prod.qty_stock };
+  }
 }
-
-// export interface TeamInputDTO {
-//   team_name: string;
-// }
