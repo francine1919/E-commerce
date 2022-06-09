@@ -3,8 +3,8 @@ export class ShoppingList {
     private user_id: string,
     private user_id_product: string,
     private prod_qtd: number,
-    private total: number,
-    private sum: number
+    private sum: number,
+    private total: number
   ) {}
 
   getId() {
@@ -30,8 +30,8 @@ export class ShoppingList {
       list.user_id,
       list.user_id_product,
       list.prod_qtd,
-      list.total,
-      list.sum
+      list.sum,
+      list.total
     );
   }
 }

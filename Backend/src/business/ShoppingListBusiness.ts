@@ -111,6 +111,7 @@ export class ShoppingListBusiness {
     }
 
     if (isProductInShoppingList) {
+      
       // getting product price,if exists
       const priceProduct: number | undefined =
         await productDatabase.getProductPriceById(input.user_id_product);
