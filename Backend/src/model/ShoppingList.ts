@@ -1,10 +1,10 @@
-
 export class ShoppingList {
   constructor(
     private user_id: string,
     private user_id_product: string,
     private prod_qtd: number,
-    private total: number
+    private total: number,
+    private sum: number
   ) {}
 
   getId() {
@@ -22,13 +22,16 @@ export class ShoppingList {
   getTotal() {
     return this.total;
   }
-
+  getSum() {
+    return this.sum;
+  }
   static toShoppingListModel(list: any): ShoppingList {
     return new ShoppingList(
       list.user_id,
       list.user_id_product,
       list.prod_qtd,
-      list.total
+      list.total,
+      list.sum
     );
   }
 }

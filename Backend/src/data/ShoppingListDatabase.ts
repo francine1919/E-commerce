@@ -46,7 +46,7 @@ export class ShoppingListDatabase extends BaseDatabase {
   ): Promise<void> {
     try {
       await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .update({ prod_qtd: prod_qtd + 1, total: total * prod_qtd })
+        .update({ prod_qtd: prod_qtd + 1, total: total + total * prod_qtd })
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id, user_id_product: user_id_product });
     } catch (err: any) {
@@ -61,7 +61,7 @@ export class ShoppingListDatabase extends BaseDatabase {
   ): Promise<void> {
     try {
       await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .update({ prod_qtd: prod_qtd - 1, total: total * prod_qtd })
+        .update({ prod_qtd: prod_qtd - 1, total: total + total * prod_qtd })
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id, user_id_product: user_id_product });
     } catch (err: any) {
