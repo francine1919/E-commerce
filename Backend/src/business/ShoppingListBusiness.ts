@@ -12,22 +12,24 @@ export class ShoppingListBusiness {
     input: ShoppingListInputDTO,
     token: string
   ): Promise<void> => {
-    //validating product id
+    //checking if product exists on database
     const isProduct = await productDatabase.getProductById(
       input.user_id_product
     );
 
-    //validations
+    //general validations
     if (!token) {
       throw new Error(
         "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
       );
     }
+
     if (!input.user_id_product) {
       throw new Error(
         "Seu carrinho está vazio, favor inserir produtos no carrinho."
       );
     }
+
     if (isProduct === undefined) {
       throw new Error("Produto não cadastrado no banco de dados.");
     }
@@ -36,36 +38,27 @@ export class ShoppingListBusiness {
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
+    //checking if product is already added on the shopping list
     const isProductInShoppingList =
       await shoppingListDatabase.getProductInShoppingList(
         id_user,
         input.user_id_product
       );
 
-    if (isProductInShoppingList) {
-      // getting product price,if exists
-      const priceProduct: number | undefined =
-        await productDatabase.getProductPriceById(input.user_id_product);
-      //changing quantity
-      await shoppingListDatabase.increaseProductQuantityInShoppingList(
-        isProductInShoppingList.getProdQtd(),
+    //adding product to the list because the product is being added for the first time
+    if (isProductInShoppingList === undefined) {
+      await shoppingListDatabase.addProductsToShoppingList(
         id_user,
-        input.user_id_product,
-        priceProduct!!
+        input.user_id_product
       );
     }
 
-    if (isProductInShoppingList === undefined) {
-      // getting product price,if exists
-      const priceProduct: number | undefined =
-        await productDatabase.getProductPriceById(input.user_id_product);
-
-      //creating list
-      await shoppingListDatabase.addProductsToShoppingList(
+    //increasing product quantity because the product is already added
+    if (isProductInShoppingList) {
+      await shoppingListDatabase.increaseProductQuantityInShoppingList(
+        isProductInShoppingList.getProdQtd(),
         id_user,
-        input.user_id_product,
-        1,
-        priceProduct!!
+        input.user_id_product
       );
     }
   };
@@ -74,22 +67,24 @@ export class ShoppingListBusiness {
     input: ShoppingListInputDTO,
     token: string
   ): Promise<void> => {
-    //validating product id
+    //checking if product exists on database
     const isProduct = await productDatabase.getProductById(
       input.user_id_product
     );
 
-    //validations
+    // general validations
     if (!token) {
       throw new Error(
         "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
       );
     }
+
     if (!input.user_id_product) {
       throw new Error(
         "Seu carrinho está vazio, favor inserir produtos no carrinho."
       );
     }
+
     if (isProduct === undefined) {
       throw new Error("Produto não cadastrado no banco de dados.");
     }
@@ -98,35 +93,32 @@ export class ShoppingListBusiness {
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
+    //checking if product is in the shopping list
     const isProductInShoppingList =
       await shoppingListDatabase.getProductInShoppingList(
         id_user,
         input.user_id_product
       );
-    if (isProductInShoppingList.getProdQtd() <= 0) {
+
+    if (isProductInShoppingList === undefined) {
+      throw new Error("O produto não está no carrinho.");
+    }
+
+    //deleting product if quantity is less than 1
+    if (isProductInShoppingList.getProdQtd() === 1) {
       await shoppingListDatabase.deleteProductFromShoppingListById(
         input.user_id_product
       );
       throw new Error("Produto deletado do banco de dados.");
     }
 
+    //decreasing product quantity
     if (isProductInShoppingList) {
-      
-      // getting product price,if exists
-      const priceProduct: number | undefined =
-        await productDatabase.getProductPriceById(input.user_id_product);
-
-      //changing quantity
       await shoppingListDatabase.decreaseProductQuantityInShoppingList(
         isProductInShoppingList.getProdQtd(),
         id_user,
-        input.user_id_product,
-        priceProduct!!
+        input.user_id_product
       );
-    }
-
-    if (isProductInShoppingList === undefined) {
-      throw new Error("O produto não está no carrinho.");
     }
   };
 
@@ -134,12 +126,12 @@ export class ShoppingListBusiness {
     input: ShoppingListInputDTO,
     token: string
   ): Promise<void> => {
-    //validating product id
+    //checking if product exists on database
     const isProduct = await productDatabase.getProductById(
       input.user_id_product
     );
 
-    //validations
+    //general validations
     if (!token) {
       throw new Error(
         "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
@@ -158,15 +150,18 @@ export class ShoppingListBusiness {
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
+    //checking if product is in the shopping list
     const isProductInShoppingList =
       await shoppingListDatabase.getProductInShoppingList(
         id_user,
         input.user_id_product
       );
-    //validating product in shopping list
+
     if (isProductInShoppingList === undefined) {
       throw new Error("O produto não está no carrinho.");
     }
+
+    //deleting product from shopping list
     await shoppingListDatabase.deleteProductFromShoppingListById(
       input.user_id_product
     );

@@ -18,11 +18,10 @@ export class UserDatabase extends BaseDatabase {
         })
         .into(UserDatabase.TABLE_NAME);
     } catch (err: any) {
-      console.log(err.sqlMessage || err.message);
       throw new Error(err.sqlMessage || err.message);
     }
   }
-  public async getUserByName(username: string) {
+  public async getUserByName(username: string): Promise<User> {
     try {
       const result = await this.connection(UserDatabase.TABLE_NAME)
         .select("*")
@@ -33,14 +32,4 @@ export class UserDatabase extends BaseDatabase {
       throw new Error(err.sqlMessage || err.message);
     }
   }
-  //   public async getAllTeams(): Promise<Team[]> {
-  //     try {
-  //       const allTeamsData = await this.connection(
-  //         TeamDatabase.TABLE_NAME
-  //       ).select("*");
-  //       return allTeamsData.map((team) => Team.toTeamModel(team));
-  //     } catch (err: any) {
-  //       throw new Error(err.sqlMessage || err.message);
-  //     }
-  //   }
 }
