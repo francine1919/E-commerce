@@ -45,7 +45,7 @@ export class ShoppingListDatabase extends BaseDatabase {
 
       //updating table when product quantity is increased
       await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .update({ prod_qtd: prod_qtd + 1, sum: price + price * prod_qtd})
+        .update({ prod_qtd: prod_qtd + 1, sum: price + price * prod_qtd })
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id, user_id_product: user_id_product });
     } catch (err: any) {
@@ -74,6 +74,20 @@ export class ShoppingListDatabase extends BaseDatabase {
       throw new Error(err.sqlMessage || err.message);
     }
   }
+  // public async calculateTotal(user_id: string): Promise<any> {
+  //   try {
+  //     const totalSum = await this.connection(ShoppingListDatabase.TABLE_NAME)
+  //       .sum("sum")
+  //       .where({ user_id: user_id });
+  //     // await this.connection(ShoppingListDatabase.TABLE_NAME).insert({
+  //     //   total: totalSum,
+  //     // });
+  //     console.log(totalSum[0]);
+  //     return totalSum[0];
+  //   } catch (err: any) {
+  //     throw new Error(err.sqlMessage || err.message);
+  //   }
+  // }
 
   public async getProductInShoppingList(
     user_id: string,
@@ -110,17 +124,6 @@ export class ShoppingListDatabase extends BaseDatabase {
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id });
       return result[0] && ShoppingList.toShoppingListModel(result[0]);
-    } catch (err: any) {
-      throw new Error(err.sqlMessage || err.message);
-    }
-  }
-  public async calculateTotal(user_id: string): Promise<any> {
-    try {
-      const total = await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .sum("sum")
-        .where({ user_id: user_id });
-      console.log(total);
-      return total
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
     }

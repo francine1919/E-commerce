@@ -61,4 +61,17 @@ export class ShoppingListController {
       res.status(500).send("Erro, por favor tente novamente.");
     }
   }
+
+  getTotal = async (req: Request, res: Response) => {
+    try {
+      const token = req.headers.authorization as string;
+      const total = await shoppingListBusiness.getTotal(token);
+      res.status(200).send(total);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).send(error.message);
+      }
+      res.status(500).send("Erro, por favor tente novamente.");
+    }
+  };
 }
