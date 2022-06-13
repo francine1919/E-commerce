@@ -66,7 +66,7 @@ export class ShoppingListController {
     try {
       const token = req.headers.authorization as string;
       const total = await shoppingListBusiness.getTotal(token);
-      res.status(200).send(total);
+      res.status(200).send({ total: total });
     } catch (error) {
       if (error instanceof Error) {
         return res.status(400).send(error.message);

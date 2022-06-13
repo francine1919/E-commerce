@@ -123,7 +123,30 @@ export class ShoppingListDatabase extends BaseDatabase {
         .select("*")
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id });
+
       return result[0] && ShoppingList.toShoppingListModel(result[0]);
+    } catch (err: any) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
+  public async getShoppingListSum(user_id: string): Promise<any> {
+    try {
+      const result = await this.connection(ShoppingListDatabase.TABLE_NAME)
+        .select("sum")
+        .from(ShoppingListDatabase.TABLE_NAME)
+        .where({ user_id: user_id });
+
+      return result;
+    } catch (err: any) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
+  public async insertingTotal(user_id: string, total: number): Promise<void> {
+    try {
+      await this.connection(ShoppingListDatabase.TABLE_NAME)
+        .insert({ total: total })
+        .into(ShoppingListDatabase.TABLE_NAME)
+        .where({ user_id: user_id });
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
     }
