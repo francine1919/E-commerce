@@ -4,8 +4,8 @@ import { ShoppingListController } from "../controller/ShoppingListController";
 export const shoppingListRouter = express.Router();
 const shoppingListController = new ShoppingListController();
 
-//get total
-shoppingListRouter.get("/total", shoppingListController.getTotal);
+// //get total
+// shoppingListRouter.get("/total", shoppingListController.getTotal);
 
 //create and add products to shopping list
 shoppingListRouter.post(

@@ -183,13 +183,14 @@ export class ShoppingListBusiness {
     const result = await shoppingListDatabase.getShoppingListSum(id_user);
     //calculating total
     let total = 0;
-    const test = result?.reduce((a: any, b: any) => {
+    const accumulatedTotal = result?.reduce((a: any, b: any) => {
       (total = a.sum + b.sum), 0;
       return total.toFixed(2);
     });
-    // //inserting total in databank
-    // await shoppingListDatabase.insertingTotal(id_user, total);
-    return test;
+    if (total === 0) {
+      total = accumulatedTotal.sum;
+    }
+    return total;
   };
 
   addProdToList = async (
@@ -221,13 +222,7 @@ export class ShoppingListBusiness {
     //get user id through token
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
-    //--------------------------------------------------------------------
-    //add prod to cart
-    // for(let prod of input.user_id_product){
 
-    // }
-
-    //---------------------------------------------------------------------
     //checking if product is already added on the shopping list
     const isProductInShoppingList =
       await shoppingListDatabase.getProductInShoppingList(
