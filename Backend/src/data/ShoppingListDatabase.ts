@@ -95,14 +95,13 @@ export class ShoppingListDatabase extends BaseDatabase {
     }
   }
 
-  public async getShoppingList(user_id: string): Promise<ShoppingList> {
+  public async getShoppingList(user_id: string): Promise<ShoppingList[]> {
     try {
       const result = await this.connection(ShoppingListDatabase.TABLE_NAME)
         .select("*")
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id });
-
-      return result[0] && ShoppingList.toShoppingListModel(result[0]);
+      return result;
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
     }

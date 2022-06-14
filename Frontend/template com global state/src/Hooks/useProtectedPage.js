@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const useProtectedPage = () => {
+export const useProtectedPage = (path) => {
   const navigate = useNavigate();
-  //Controlando o acesso
+  //Controlling the access
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token === null) {
-      navigate("/");
+      alert("Faça o cadastro para continuar.");
+      navigate("/signup");
     }
   }, []);
 };

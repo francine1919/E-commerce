@@ -4,67 +4,55 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import useForm from "../../Hooks/useForm";
 import { base_Url } from "../../Constants/base_Url";
+
 export default function Login() {
   const navigate = useNavigate();
 
   //form
   const { form, onChangeForm, clearForm } = useForm({
-    email: "",
-    password: "",
+    username: "",
+   
   });
   const onLogin = (e) => {
     e.preventDefault();
   };
-
-  //login endpoint
-  const loginUser = () => {
+  //endpoint signup
+  const Login = () => {
     const body = form;
-    const url = base_Url + "/user/login";
     axios
-      .post(url, body)
+      .post(base_Url + "/user/signup", body)
       .then((res) => {
         clearForm();
         localStorage.setItem("token", res.data.token);
-        navigate("/agro/user/wallet");
+        navigate("/");
       })
       .catch((err) => {
-        console.log(err);
-        alert("Email ou senha incorreta, por favor tente novamente.");
+        alert(`${err.response.data}`);
       });
   };
   return (
-    <>
+    <div>
       <Header />
-      <div>Login</div>
-
+      <h1>Login</h1>
       <form onSubmit={onLogin}>
-        <p>Email</p>
+        <p>Nome</p>
         <input
           type="text"
-          name={"email"}
-          placeholder="Email"
+          name={"username"}
+          placeholder="Nome"
           onChange={onChangeForm}
-          value={form.email}
-          required
-        />
-        <p>Senha</p>
-        <input
-          type="password"
-          name={"password"}
-          placeholder="Senha"
-          onChange={onChangeForm}
-          value={form.password}
+          value={form.username}
           required
         />
         <div>
-          <button type={"submit"} onClick={loginUser}>
+          <button type={"submit"} onClick={Login}>
             Enviar
           </button>
-          <Link to="/signup">
-            <button>Cadrastrar</button>
+          <Link to="/">
+            <button>Voltar</button>
           </Link>
         </div>
       </form>
-    </>
+    </div>
   );
 }

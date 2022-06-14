@@ -7,13 +7,13 @@ const shoppingListDatabase = new ShoppingListDatabase();
 export class ProductDatabase extends BaseDatabase {
   private static TABLE_NAME = "products";
 
-  public async getCurrentStock(): Promise<Products[]> {
+  public async getCurrentStock(): Promise<Product[]> {
     try {
       const productsInStock = await this.connection(ProductDatabase.TABLE_NAME)
         .select("*")
         .from(ProductDatabase.TABLE_NAME);
       const products = productsInStock.map((prod) =>
-        Product.toProductModelStock(prod)
+        Product.toProductModel(prod)
       );
       return products;
     } catch (err: any) {

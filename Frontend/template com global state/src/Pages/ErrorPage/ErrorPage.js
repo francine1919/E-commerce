@@ -6,6 +6,7 @@ function ErrorPage() {
         height="400"
         allowFullScreen
         src="https://giphy.com/embed/qjgm2rlJ6wep88aitp"
+        title="Error page"
       />
     </div>
   );

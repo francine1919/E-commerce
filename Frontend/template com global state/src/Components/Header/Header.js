@@ -9,8 +9,8 @@ export default function Header() {
         <Link to="/">
           <p>home</p>
         </Link>
-        <Link to="/aboutus">
-          <p>about us</p>
+        <Link to="/signup">
+          <p>Cadastre-se</p>
         </Link>
       </ContainerHeaderLogin>
     </div>

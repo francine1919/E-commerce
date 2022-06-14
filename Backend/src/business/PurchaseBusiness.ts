@@ -23,13 +23,14 @@ export class PurchaseBusiness {
 
     //getting products sums from databank
     const result = await shoppingListDatabase.getShoppingListSum(id_user);
-   
+
     //calculating total
     let total: number = 0;
     const accumulatedTotal = result?.reduce((a: any, b: any) => {
       (total = a.sum + b.sum), 0;
       return total;
     });
+    
     if (total === 0) {
       total = accumulatedTotal.sum;
     }

@@ -1,36 +1,28 @@
-import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import useForm from "../../Hooks/useForm";
-import { base_Url } from "../../Constants/base_Url";
+import { useProtectedPage } from "../../Hooks/useProtectedPage";
+import { signUp } from "../../Services/services";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {navigate("/shop")};
+  }, []);
+
   //form
   const { form, onChangeForm, clearForm } = useForm({
-    name: "",
-    email: "",
-    password: "",
+    username: "",
+    delivery_date: "",
   });
   const onSignUp = (e) => {
     e.preventDefault();
-   
+    signUp(form, navigate);
+    clearForm();
   };
-  //endpoint signup
-  const signUp = () => {
-    const body = form;
-    axios
-      .post(base_Url + "/user/signup", body)
-      .then((res) => {
-         clearForm();
-        localStorage.setItem("token", res.data.token);
-        navigate("/");
-      })
-      .catch((err) => {
-        alert(`${err.response.data}`);
-      });
-  };
+
   return (
     <div>
       <Header />
@@ -39,37 +31,25 @@ export default function SignUp() {
         <p>Nome</p>
         <input
           type="text"
-          name={"name"}
+          name={"username"}
           placeholder="Nome"
           onChange={onChangeForm}
-          value={form.name}
+          value={form.username}
           required
         />
-        <p>Email</p>
+        <p>Data de entrega</p>
         <input
-          type="text"
-          name={"email"}
-          placeholder="Email"
+          type="date"
+          name={"delivery_date"}
+          placeholder="Data de entrega"
           onChange={onChangeForm}
-          value={form.email}
-          required
-        />
-
-        <p>Senha</p>
-        <input
-          type="password"
-          name={"password"}
-          placeholder="Senha"
-          onChange={onChangeForm}
-          value={form.password}
+          value={form.delivery_date}
           required
         />
         <div>
-          <button type={"submit"} onClick={signUp}>
-            Enviar
-          </button>
-          <Link to="/login">
-            <button>Login</button>
+          <button type={"submit"}>Enviar</button>
+          <Link to="/">
+            <button>Voltar</button>
           </Link>
         </div>
       </form>

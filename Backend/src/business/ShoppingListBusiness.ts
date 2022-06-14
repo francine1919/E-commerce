@@ -181,16 +181,17 @@ export class ShoppingListBusiness {
 
     //getting products sums from databank
     const result = await shoppingListDatabase.getShoppingListSum(id_user);
+
     //calculating total
     let total = 0;
-    const accumulatedTotal = result?.reduce((a: any, b: any) => {
-      (total = a.sum + b.sum), 0;
-      return total.toFixed(2);
+
+    const accumulatedTotal = result?.map((sum: any) => {
+      if (isNaN(sum.sum)) sum.sum = 0;
+      total += sum.sum;
+      return total;
     });
-    if (total === 0) {
-      total = accumulatedTotal.sum;
-    }
-    return total;
+
+    return total.toFixed(2);
   };
 
   addProdToList = async (
@@ -246,5 +247,22 @@ export class ShoppingListBusiness {
         input.user_id_product
       );
     }
+  };
+  getShoppingList = async (token: string): Promise<any> => {
+    //validating token
+    if (!token) {
+      throw new Error(
+        "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
+      );
+    }
+
+    //get user id through token
+    const tokenInfo = authenticator.getTokenData(token);
+    const id_user = tokenInfo.id;
+
+    //getting products sums from databank
+    const result = await shoppingListDatabase.getShoppingList(id_user);
+
+    return result;
   };
 }
