@@ -4,7 +4,7 @@ import { GlobalContext } from "../Global/GlobalContext/GlobalContext";
 
 export const useProtectedPage = (path) => {
   const navigate = useNavigate();
-  const { isTokenExpired } = useContext(GlobalContext);
+
 
   //Controlling the access
   useEffect(() => {
@@ -13,9 +13,9 @@ export const useProtectedPage = (path) => {
       alert("Faça o cadastro para continuar.");
       navigate("/signup");
     }
-    if (isTokenExpired) {
-      // alert("Seu token de acesso expirou, por favor logue-se novamente");
-      navigate("/signup");
-    }
+    // if (isTokenExpired) {
+    //   // alert("Seu token de acesso expirou, por favor logue-se novamente");
+    //   navigate("/signup");
+    // }
   }, []);
 };

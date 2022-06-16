@@ -6,11 +6,10 @@ import { goToSignupPage } from "../../Router/coordinator";
 import { GlobalContext } from "../GlobalContext/GlobalContext";
 
 const GlobalState = (props) => {
-  
   const [total, setTotal] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [shoppingList, setShoppingList] = useState(undefined);
-  const [isTokenExpired, setIsTokenExpired] = useState(false);
+  const [token, setToken] = useState(false);
   const headers = {
     headers: { authorization: localStorage.getItem("token") },
   };
@@ -24,7 +23,7 @@ const GlobalState = (props) => {
       })
       .catch((err) => {
         if (err.response.data === "jwt expired") {
-          setIsTokenExpired(true);
+          setToken(null);
           setIsLoaded(true);
         }
         console.log(err.response.data);
@@ -40,7 +39,7 @@ const GlobalState = (props) => {
       })
       .catch((err) => {
         if (err.response.data === "jwt expired") {
-          setIsTokenExpired(true);
+          setToken(null);
           setIsLoaded(true);
         }
         console.log(err.response);
@@ -62,7 +61,7 @@ const GlobalState = (props) => {
         total,
         shoppingList,
         isLoaded,
-        isTokenExpired,
+        token,
       }}
     >
       {props.children}
