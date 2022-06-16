@@ -7,7 +7,6 @@ export const useGet = (path) => {
   const [isLoading, setIsLoading] = useState(true);
 
   //Axios get data
-
   const getData = async () => {
     const token = localStorage.getItem("token");
     const header = { headers: { authorization: token } };

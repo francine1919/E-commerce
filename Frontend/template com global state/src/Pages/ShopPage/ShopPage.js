@@ -1,61 +1,15 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import { capitalize } from "../../Functions/functions";
+import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useGet } from "../../Hooks/useGet";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
 import { addProductToCart } from "../../Services/services";
-import ShoppingCard from "./ShoppingCard";
-
 export default function ShopPage() {
   useProtectedPage();
   const { data, isLoading } = useGet("/stock/all");
-  const [total, setTotal] = useState();
-  const [list, setList] = useState();
-
-  //mover para global state
-  const getShoppingList = () => {
-    const headers = {
-      headers: { authorization: localStorage.getItem("token") },
-    };
-    axios
-      .get("http://localhost:3003/shopping/list", headers)
-      .then((res) => {
-        setList(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-  //mover para global state
-  const getTotal = () => {
-    const headers = {
-      headers: { authorization: localStorage.getItem("token") },
-    };
-    axios
-      .get("http://localhost:3003/shopping/total", headers)
-      .then((res) => {
-        setTotal(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-  const cartList = list?.map((prod) => {
-    return (
-      <ShoppingCard
-        key={prod.user_id_product}
-        qtd={prod.prod_qtd}
-        id={prod.user_id_product}
-        subtotal={prod.sum}
-      ></ShoppingCard>
-    );
-  });
-
-  useEffect(() => {
-    getShoppingList();
-    getTotal();
-  }, [cartList]);
+  const { total } = useContext(GlobalContext);
 
   const productList = data?.map((prod) => {
     return (
@@ -77,7 +31,9 @@ export default function ShopPage() {
     <>
       <Header />
       <div>ShopPage</div>
-      <div>{cartList}</div>
+      <Link to="/cart">
+        <button>Carrinho</button>
+      </Link>
       <div> Total: {total?.total}</div>
       <div>{isLoading ? "Loading..." : productList}</div>
     </>

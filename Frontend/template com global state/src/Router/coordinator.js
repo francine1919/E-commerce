@@ -7,3 +7,6 @@ export const goToCartPage = (navigate) => {
 export const goToShopPage = (navigate) => {
   navigate("/shop");
 };
+export const goToSignupPage=(navigate)=>{
+  navigate("/signup")
+}

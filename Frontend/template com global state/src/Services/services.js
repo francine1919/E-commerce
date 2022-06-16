@@ -18,9 +18,9 @@ export const signUp = (body, navigate) => {
     });
 };
 
-export const addProductToCart = (Id) => {
+export const addProductToCart = (id) => {
   const url = `${base_Url}/shopping/add`;
-  const body = { user_id_product: Id };
+  const body = { user_id_product: id };
   axios
     .post(url, body, headers)
     .then((res) => {
@@ -30,13 +30,4 @@ export const addProductToCart = (Id) => {
       console.log(err);
     });
 };
-export const getShoppingList = () => {
-  axios
-    .get(base_Url + "/shopping/list", headers)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err.response);
-    });
-};
+
