@@ -7,7 +7,6 @@ export const useProtectedPage = () => {
 
   //Controlling the access
   useEffect(() => {
-    setTimeout(() => (localStorage.removeItem("token"), 3600000));
     const token = localStorage.getItem("token");
     if (token === null) {
       alert("Faça o cadastro para continuar.");

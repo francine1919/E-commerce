@@ -6,7 +6,7 @@ import ShoppingCart from "./ShoppingCart";
 
 export default function CartPage() {
   useProtectedPage();
-  const { total, isLoaded, shoppingList } = useContext(GlobalContext);
+  const { total, shoppingList } = useContext(GlobalContext);
   const cartList = shoppingList?.map((prod, index) => {
     return (
       <ShoppingCart
@@ -23,9 +23,8 @@ export default function CartPage() {
       <Header />
       <div>CartPage</div>
       <div>{cartList}</div>
-
       <div> Total:R$ {total?.total}</div>
-      <div>{isLoaded ? <ShoppingCart /> : "Loading..."}</div>
+      {/* <div>{isLoaded ? <ShoppingCart /> : "Loading..."}</div> */}
     </>
   );
 }

@@ -12,6 +12,16 @@ export class ShoppingListBusiness {
     input: ShoppingListInputDTO,
     token: string
   ): Promise<void> => {
+    //get user id through token
+    const tokenInfo = authenticator.getTokenData(token);
+    const id_user = tokenInfo.id;
+
+    //checking if product is already added on the shopping list
+    const isProductInShoppingList =
+      await shoppingListDatabase.getProductInShoppingList(
+        id_user,
+        input.user_id_product
+      );
     //checking if product exists on database
     const isProduct = await productDatabase.getProductById(
       input.user_id_product
@@ -34,17 +44,7 @@ export class ShoppingListBusiness {
       throw new Error("Produto não cadastrado no banco de dados.");
     }
 
-    //get user id through token
-    const tokenInfo = authenticator.getTokenData(token);
-    const id_user = tokenInfo.id;
-
-    //checking if product is already added on the shopping list
-    const isProductInShoppingList =
-      await shoppingListDatabase.getProductInShoppingList(
-        id_user,
-        input.user_id_product
-      );
-
+    
     //adding product to the list because the product is being added for the first time
     if (isProductInShoppingList === undefined) {
       await shoppingListDatabase.addProductsToShoppingList(

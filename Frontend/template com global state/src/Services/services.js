@@ -12,15 +12,16 @@ export const signUp = (body, navigate) => {
       localStorage.setItem("token", res.data.token);
       alert("Cadastro realizado!");
       goToShopPage(navigate);
+      window.location.reload(false);
     })
     .catch((err) => {
       alert(` ${err.response}`);
     });
 };
 
-export const addProductToCart = (id) => {
+export const addProductToCart = (Id) => {
   const url = `${base_Url}/shopping/add`;
-  const body = { user_id_product: id };
+  const body = { user_id_product: Id };
   axios
     .post(url, body, headers)
     .then((res) => {
@@ -30,4 +31,3 @@ export const addProductToCart = (id) => {
       console.log(err);
     });
 };
-
