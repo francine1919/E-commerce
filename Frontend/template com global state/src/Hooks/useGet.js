@@ -27,7 +27,7 @@ export const useGet = (path) => {
   };
   useEffect(() => {
     getData();
-  }, []);
+  }, [path]);
 
   return { data, isLoading };
 };

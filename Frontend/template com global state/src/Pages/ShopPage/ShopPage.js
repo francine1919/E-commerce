@@ -10,7 +10,7 @@ import {
 } from "../../Services/services";
 export default function ShopPage() {
   useProtectedPage();
-  const { data, isLoading, shoppingList } = useGet("/stock/all");
+  const { data, isLoading } = useGet("/stock/all");
   const { total } = useContext(GlobalContext);
 
   const productList = data?.map((prod) => {

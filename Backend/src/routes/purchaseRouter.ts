@@ -5,4 +5,4 @@ export const purchaseRouter = express.Router();
 const purchaseController = new PurchaseController();
 
 //create purchase
-purchaseRouter.post("/total", purchaseController.addPurchase);
+purchaseRouter.get("/total", purchaseController.addPurchase);

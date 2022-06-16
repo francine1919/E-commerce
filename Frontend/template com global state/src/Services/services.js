@@ -14,24 +14,48 @@ export const signUp = (body, navigate) => {
       alert("Cadastro realizado!");
       goToShopPage(navigate);
       window.location.reload(false);
-     
     })
     .catch((err) => {
       alert(` ${err.response}`);
     });
 };
 
-export let isProdInCart = []
 export const addProductToCart = (Id) => {
   const url = `${base_Url}/shopping/add`;
   const body = { user_id_product: Id };
-  isProdInCart.push(Id)
   axios
     .post(url, body, headers)
     .then((res) => {
-      console.log(res.data)
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
 };
+
+export const addPurchase = () => {
+  const url = `${base_Url}/purchase/total`;
+
+  axios
+    .get(url, headers)
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// export const addPurchase=(id)=>{
+//  const url = `${base_Url}/shopping/add`;
+//  const body = { user_id_product: id };
+
+//  axios
+//    .post(url, body, headers)
+//    .then((res) => {
+//      console.log(res.data);
+//    })
+//    .catch((err) => {
+//      console.log(err);
+//    });
+//   }

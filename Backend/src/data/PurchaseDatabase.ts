@@ -1,6 +1,8 @@
+import { ShoppingList } from "../model/ShoppingList";
 import { BaseDatabase } from "./BaseDatabase";
 import { ProductDatabase } from "./ProductDatabase";
-
+import { ShoppingListDatabase } from "./ShoppingListDatabase";
+const shoppingList = new ShoppingListDatabase();
 export class PurchaseDatabase extends BaseDatabase {
   private static TABLE_NAME = "user_has_purchase";
 
@@ -13,6 +15,7 @@ export class PurchaseDatabase extends BaseDatabase {
           total: total,
         })
         .into(PurchaseDatabase.TABLE_NAME);
+      await this.connection("user_has_products").truncate();
     } catch (err: any) {
       console.log(err.sqlMessage || err.message);
       throw new Error(err.sqlMessage || err.message);

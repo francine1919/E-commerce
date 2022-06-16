@@ -15,18 +15,6 @@ export class ShoppingListBusiness {
     //get user id through token
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
-
-    //checking if product is already added on the shopping list
-    // const isProductInShoppingList =
-    //   await shoppingListDatabase.getProductInShoppingList(
-    //     id_user,
-    //     input.user_id_product
-    //   );
-    // //checking if product exists on database
-    // const isProduct = await productDatabase.getProductById(
-    //   input.user_id_product
-    // );
-
     //general validations
     if (!token) {
       throw new Error(
