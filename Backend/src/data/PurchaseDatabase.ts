@@ -1,14 +1,16 @@
-import { ShoppingList } from "../model/ShoppingList";
+// import { ShoppingList } from "../model/ShoppingList";
+import { ShoppingListBusiness } from "../business/ShoppingListBusiness";
 import { BaseDatabase } from "./BaseDatabase";
-import { ProductDatabase } from "./ProductDatabase";
+// import { ProductDatabase } from "./ProductDatabase";
 import { ShoppingListDatabase } from "./ShoppingListDatabase";
 const shoppingList = new ShoppingListDatabase();
+
 export class PurchaseDatabase extends BaseDatabase {
   private static TABLE_NAME = "user_has_purchase";
 
   public async addTotal(user_id: string, total: number): Promise<void> {
     try {
-      //inserting total
+     // inserting total
       await this.connection(PurchaseDatabase.TABLE_NAME)
         .insert({
           user_id,

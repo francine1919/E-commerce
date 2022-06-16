@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import useForm from "../../Hooks/useForm";
-import { useProtectedPage } from "../../Hooks/useProtectedPage";
 import { signUp } from "../../Services/services";
 
 export default function SignUp() {

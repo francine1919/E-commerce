@@ -12,9 +12,6 @@ export default function Header() {
         <Link to="/shop">
           <p>Loja</p>
         </Link>
-        <Link to="/signup">
-          <p>Cadastre-se</p>
-        </Link>
       </ContainerHeaderLogin>
     </div>
   );

@@ -16,9 +16,11 @@ export const signUp = (body, navigate) => {
       window.location.reload(false);
     })
     .catch((err) => {
-      alert(` ${err.response}`);
+      alert(` ${err.response.data}`);
     });
 };
+
+
 
 export const addProductToCart = (Id) => {
   const url = `${base_Url}/shopping/add`;
@@ -33,13 +35,14 @@ export const addProductToCart = (Id) => {
     });
 };
 
-export const addPurchase = () => {
+export const addPurchase = (navigate) => {
   const url = `${base_Url}/purchase/total`;
 
   axios
     .get(url, headers)
     .then((res) => {
       console.log(res.data);
+      goToShopPage(navigate)
     })
     .catch((err) => {
       console.log(err);

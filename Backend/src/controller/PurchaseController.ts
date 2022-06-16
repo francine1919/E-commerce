@@ -21,7 +21,7 @@ export class PurchaseController {
     try {
       const token = req.headers.authorization as string;
       const id_prod = req.body.id_prod;
-      await purchaseBusiness.deacreseStockQty(token, id_prod);
+      await purchaseBusiness.decreaseStockQty(token, id_prod);
 
       res.status(200).send("Done!");
     } catch (error) {
