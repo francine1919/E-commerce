@@ -3,11 +3,10 @@ import axios from "axios";
 import { base_Url } from "../Constants/base_Url";
 
 export const useGet = (path) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   //Axios get data
-
   const getData = async () => {
     const token = localStorage.getItem("token");
     const header = { headers: { authorization: token } };

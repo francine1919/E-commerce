@@ -12,10 +12,20 @@ export class ShoppingListBusiness {
     input: ShoppingListInputDTO,
     token: string
   ): Promise<void> => {
-    //checking if product exists on database
-    const isProduct = await productDatabase.getProductById(
-      input.user_id_product
-    );
+    //get user id through token
+    const tokenInfo = authenticator.getTokenData(token);
+    const id_user = tokenInfo.id;
+
+    //checking if product is already added on the shopping list
+    // const isProductInShoppingList =
+    //   await shoppingListDatabase.getProductInShoppingList(
+    //     id_user,
+    //     input.user_id_product
+    //   );
+    // //checking if product exists on database
+    // const isProduct = await productDatabase.getProductById(
+    //   input.user_id_product
+    // );
 
     //general validations
     if (!token) {
@@ -30,37 +40,10 @@ export class ShoppingListBusiness {
       );
     }
 
-    if (isProduct === undefined) {
-      throw new Error("Produto não cadastrado no banco de dados.");
-    }
-
-    //get user id through token
-    const tokenInfo = authenticator.getTokenData(token);
-    const id_user = tokenInfo.id;
-
-    //checking if product is already added on the shopping list
-    const isProductInShoppingList =
-      await shoppingListDatabase.getProductInShoppingList(
-        id_user,
-        input.user_id_product
-      );
-
-    //adding product to the list because the product is being added for the first time
-    if (isProductInShoppingList === undefined) {
-      await shoppingListDatabase.addProductsToShoppingList(
-        id_user,
-        input.user_id_product
-      );
-    }
-
-    //increasing product quantity because the product is already added
-    if (isProductInShoppingList) {
-      await shoppingListDatabase.increaseProductQuantityInShoppingList(
-        isProductInShoppingList.getProdQtd(),
-        id_user,
-        input.user_id_product
-      );
-    }
+    await shoppingListDatabase.addProductsToShoppingList(
+      id_user,
+      input.user_id_product
+    );
   };
 
   decreaseProductQuantityInShoppingList = async (
@@ -194,60 +177,6 @@ export class ShoppingListBusiness {
     return total.toFixed(2);
   };
 
-  addProdToList = async (
-    input: ShoppingListInputDTO,
-    token: string
-  ): Promise<void> => {
-    // //checking if product exists on database
-    const isProduct = await productDatabase.getProductById(
-      input.user_id_product
-    );
-
-    //general validations
-    if (!token) {
-      throw new Error(
-        "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
-      );
-    }
-
-    if (!input.user_id_product) {
-      throw new Error(
-        "Seu carrinho está vazio, favor inserir produtos no carrinho."
-      );
-    }
-
-    if (isProduct === undefined) {
-      throw new Error("Produto não cadastrado no banco de dados.");
-    }
-
-    //get user id through token
-    const tokenInfo = authenticator.getTokenData(token);
-    const id_user = tokenInfo.id;
-
-    //checking if product is already added on the shopping list
-    const isProductInShoppingList =
-      await shoppingListDatabase.getProductInShoppingList(
-        id_user,
-        input.user_id_product
-      );
-
-    //adding product to the list because the product is being added for the first time
-    if (isProductInShoppingList === undefined) {
-      await shoppingListDatabase.addProductsToShoppingList(
-        id_user,
-        input.user_id_product
-      );
-    }
-
-    //increasing product quantity because the product is already added
-    if (isProductInShoppingList) {
-      await shoppingListDatabase.increaseProductQuantityInShoppingList(
-        isProductInShoppingList.getProdQtd(),
-        id_user,
-        input.user_id_product
-      );
-    }
-  };
   getShoppingList = async (token: string): Promise<any> => {
     //validating token
     if (!token) {

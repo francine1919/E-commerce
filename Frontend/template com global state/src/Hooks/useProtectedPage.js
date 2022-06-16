@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../Global/GlobalContext/GlobalContext";
 
-export const useProtectedPage = (path) => {
+export const useProtectedPage = () => {
   const navigate = useNavigate();
+
   //Controlling the access
   useEffect(() => {
     const token = localStorage.getItem("token");

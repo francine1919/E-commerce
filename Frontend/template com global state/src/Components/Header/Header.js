@@ -7,7 +7,10 @@ export default function Header() {
     <div>
       <ContainerHeaderLogin>
         <Link to="/">
-          <p>home</p>
+          <p>Home</p>
+        </Link>
+        <Link to="/shop">
+          <p>Loja</p>
         </Link>
         <Link to="/signup">
           <p>Cadastre-se</p>

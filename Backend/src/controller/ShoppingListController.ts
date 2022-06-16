@@ -77,7 +77,9 @@ export class ShoppingListController {
   async getShoppingList(req: Request, res: Response) {
     try {
       const token = req.headers.authorization as string;
+      // console.log(token)
       const shoppingList = await shoppingListBusiness.getShoppingList(token);
+
       res.status(200).send(shoppingList);
     } catch (error: any) {
       if (error instanceof Error) {

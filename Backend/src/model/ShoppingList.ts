@@ -3,8 +3,7 @@ export class ShoppingList {
     private user_id: string,
     private user_id_product: string,
     private prod_qtd: number,
-    private sum: number,
-    private total: number
+    private sum: number
   ) {}
 
   getId() {
@@ -19,9 +18,6 @@ export class ShoppingList {
     return this.prod_qtd;
   }
 
-  getTotal() {
-    return this.total;
-  }
   getSum() {
     return this.sum;
   }
@@ -30,8 +26,7 @@ export class ShoppingList {
       list.user_id,
       list.user_id_product,
       list.prod_qtd,
-      list.sum,
-      list.total
+      list.sum
     );
   }
 }
