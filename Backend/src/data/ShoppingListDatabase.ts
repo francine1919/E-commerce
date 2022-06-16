@@ -7,20 +7,24 @@ export class ShoppingListDatabase extends BaseDatabase {
   public async addProductsToShoppingList(
     user_id: string,
     user_id_product: string
+    // prod_qtd: number
   ): Promise<void> {
     try {
       const productsData = new ProductDatabase();
       //getting price from product database
       const price = await productsData.getProductPriceById(user_id_product);
-
-      //inserting a new product to the shopping list
-      await this.connection(ShoppingListDatabase.TABLE_NAME)
-        .insert({
-          user_id,
-          user_id_product,
-          sum: price,
-        })
-        .into(ShoppingListDatabase.TABLE_NAME);
+      //inserting product or updating
+      await this.connection.raw(`
+       INSERT INTO user_has_products (user_id, user_id_product, sum, prod_qtd ) VALUES (
+        "${user_id}",
+        "${user_id_product}",
+        ${price},
+        ${1}
+        )
+       ON DUPLICATE KEY UPDATE
+       prod_qtd = prod_qtd + 1,
+       sum = ${price} * prod_qtd ;
+       `);
     } catch (err: any) {
       console.log(err.sqlMessage || err.message);
       throw new Error(err.sqlMessage || err.message);
@@ -96,11 +100,13 @@ export class ShoppingListDatabase extends BaseDatabase {
   }
 
   public async getShoppingList(user_id: string): Promise<ShoppingList[]> {
+    // console.log(user_id)
     try {
       const result = await this.connection(ShoppingListDatabase.TABLE_NAME)
         .select("*")
         .from(ShoppingListDatabase.TABLE_NAME)
         .where({ user_id: user_id });
+      // console.log(result)
       return result;
     } catch (err: any) {
       throw new Error(err.sqlMessage || err.message);
@@ -118,9 +124,9 @@ export class ShoppingListDatabase extends BaseDatabase {
       throw new Error(err.sqlMessage || err.message);
     }
   }
-  // public async insertingTotal(user_id: string, total: number): Promise<void> {
+ //     await this.connection(ShoppingListDatabase.TABLE_NAME)
+   // public async insertingTotal(user_id: string, total: number): Promise<void> {
   //   try {
-  //     await this.connection(ShoppingListDatabase.TABLE_NAME)
   //       .insert({ total: total })
   //       .into(ShoppingListDatabase.TABLE_NAME)
   //       .where({ user_id: user_id });

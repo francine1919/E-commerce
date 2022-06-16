@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import { capitalize } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useGet } from "../../Hooks/useGet";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
-import { addProductToCart } from "../../Services/services";
+import {
+  addProductToCart
+} from "../../Services/services";
 export default function ShopPage() {
   useProtectedPage();
-  const { data, isLoading } = useGet("/stock/all");
+  const { data, isLoading, shoppingList } = useGet("/stock/all");
   const { total } = useContext(GlobalContext);
 
   const productList = data?.map((prod) => {
+    
     return (
       <div key={prod.id}>
         <img src="https://picsum.photos/200/300" alt="Random images" />

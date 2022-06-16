@@ -4,7 +4,7 @@ import { base_Url } from "../../Constants/base_Url";
 import { GlobalContext } from "../GlobalContext/GlobalContext";
 
 const GlobalState = (props) => {
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [shoppingList, setShoppingList] = useState(undefined);
 
@@ -16,7 +16,6 @@ const GlobalState = (props) => {
       .get("http://localhost:3003/shopping/list", headers)
       .then((res) => {
         setShoppingList(res.data);
-        // console.log(res.data)
         setIsLoaded(true);
       })
       .catch((err) => {
@@ -29,11 +28,10 @@ const GlobalState = (props) => {
       .get(base_Url + "/shopping/total", headers)
       .then((res) => {
         setTotal(res.data);
-        // console.log(res.data)
         setIsLoaded(true);
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err.response.data);
         setIsLoaded(true);
       });
   };
