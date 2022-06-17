@@ -43,7 +43,6 @@ export const addPurchase = (navigate) => {
   axios
     .get(url, headers)
     .then((res) => {
-      console.log(res.data);
       goToShopPage(navigate)
     })
     .catch((err) => {

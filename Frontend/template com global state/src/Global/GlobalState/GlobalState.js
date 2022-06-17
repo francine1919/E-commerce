@@ -1,6 +1,4 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { base_Url } from "../../Constants/base_Url";
 import { useGet } from "../../Hooks/useGet";
 import { GlobalContext } from "../GlobalContext/GlobalContext";
 
@@ -59,6 +57,11 @@ const GlobalState = (props) => {
       });
 
       localStorage.setItem("carrinho", JSON.stringify(newProductsInCartFilter));
+
+      if (newProductsInCartFilter.length === 0) {
+        setTotal(0);
+        localStorage.setItem("total", JSON.stringify(0));
+      }
       setIsLoaded(!isLoaded);
     }
   };
@@ -70,11 +73,16 @@ const GlobalState = (props) => {
     let retrievedCart = JSON.parse(cart);
     retrievedCart?.forEach((prod) => {
       totalPurchase += prod.prod_qtd * prod.price;
+      if (retrievedCart.length === 0) {
+        setTotal(0);
+        localStorage.setItem("total", JSON.stringify(0));
+      }
       localStorage.setItem("total", JSON.stringify(totalPurchase));
       setTotal(totalPurchase);
       return totalPurchase;
     });
   }, [isLoaded]);
+
   // const headers = {
   //   headers: { Authorization: localStorage.getItem("token") },
   // };
