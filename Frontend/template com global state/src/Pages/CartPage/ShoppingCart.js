@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { capitalize } from "../../Functions/functions";
-import { useGet } from "../../Hooks/useGet";
+import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 
 export default function ShoppingCart(props) {
-//  const { data, isLoading } = useGet("/stock/" + props.id);
-//   const names = data?.name;
-// const { total, shoppingList } = useContext(GlobalContext);
- //  const namesWithFirstLetterToUppercase = props.name?.charAt(0).toUpperCase() + props.name?.slice(1); 
- 
-   return (
-    <>
-      
-        <div>
-          <p>{capitalize(props.name.toLowerCase())}</p>
-          <button>+</button>
-          <p>{props.qtd}</p>
-          <button>-</button>
-          <p>{props.subtotal}</p>
-        </div>
+  const { onAdd, onRemove } = useContext(GlobalContext);
 
+  return (
+    <>
+      <div>
+        <p>{capitalize(props.name.toLowerCase())}</p>
+        <button
+          onClick={() => {
+            onAdd(props.id);
+          }}
+        >
+          +
+        </button>
+        <p>{props.qtd}</p>
+        <button
+          onClick={() => {
+            onRemove(props.id);
+          }}
+        >
+          -
+        </button>
+        <p>Preço unitário: R$ {props.subtotal}</p>
+      </div>
     </>
   );
 }
