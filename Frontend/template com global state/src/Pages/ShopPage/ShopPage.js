@@ -9,7 +9,7 @@ import { useProtectedPage } from "../../Hooks/useProtectedPage";
 export default function ShopPage() {
   useProtectedPage();
   const { data, isLoading } = useGet("/stock/all");
-  //const { cart, setCart } = useContext(GlobalContext);
+  const { cart, setCart } = useContext(GlobalContext);
   let carrinho = [];
 
   // useEffect(() => {
@@ -20,34 +20,8 @@ export default function ShopPage() {
   //   window.localStorage.setItem("cart", JSON.stringify(cart));
   // }, [data]);
 
-  // const onAdd = (produtoId) => {
-  //   const productsInCart = cart?.find((item) => produtoId === item.id);
-
-  //   if (productsInCart) {
-  //     const newProductsInCart = cart.map((item) => {
-  //       if (produtoId === item.id) {
-  //         return {
-  //           ...item,
-  //           prod_qtd: item.prod_qtd + 1,
-  //         };
-  //       }
-  //       return item;
-  //     });
-  //     setCart(newProductsInCart);
-
-  //     localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
-  //   } else {
-  //     const productToAdd = data?.find((item) => produtoId === item.id);
-  //     const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
-  //     setCart(newProductsInCart);
-  //      localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
-  //   }
-  // };
   const onAdd = (produtoId) => {
-    const cart=JSON.parse(
-      window.localStorage.getItem("carrinho")
-    )
-    const productsInCart = cart.find((item) => produtoId === item.id);
+    const productsInCart = cart?.find((item) => produtoId === item.id);
 
     if (productsInCart) {
       const newProductsInCart = cart.map((item) => {
@@ -59,15 +33,41 @@ export default function ShopPage() {
         }
         return item;
       });
-      //setCart(newProductsInCart);
+      setCart(newProductsInCart);
+
       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
     } else {
       const productToAdd = data?.find((item) => produtoId === item.id);
       const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
-     // setCart(newProductsInCart);
-      localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
+      setCart(newProductsInCart);
+       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
     }
   };
+  // const onAdd = (produtoId) => {
+  //   const cart=JSON.parse(
+  //     window.localStorage.getItem("carrinho")
+  //   )
+  //   const productsInCart = cart.find((item) => produtoId === item.id);
+
+  //   if (productsInCart) {
+  //     const newProductsInCart = cart.map((item) => {
+  //       if (produtoId === item.id) {
+  //         return {
+  //           ...item,
+  //           prod_qtd: item.prod_qtd + 1,
+  //         };
+  //       }
+  //       return item;
+  //     });
+  //     //setCart(newProductsInCart);
+  //     localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
+  //   } else {
+  //     const productToAdd = data?.find((item) => produtoId === item.id);
+  //     const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
+  //    // setCart(newProductsInCart);
+  //     localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
+  //   }
+  // };
 
   const totals = localStorage.getItem("cart");
   const retrievedCart = JSON.parse(totals);
