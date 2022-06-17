@@ -14,24 +14,40 @@ export const signUp = (body, navigate) => {
       alert("Cadastro realizado!");
       goToShopPage(navigate);
       window.location.reload(false);
-     
+      window.localStorage.setItem("carrinho", JSON.stringify([]));
     })
     .catch((err) => {
-      alert(` ${err.response}`);
+      alert(` ${err.response.data}`);
     });
 };
 
-export let isProdInCart = []
 export const addProductToCart = (Id) => {
   const url = `${base_Url}/shopping/add`;
   const body = { user_id_product: Id };
-  isProdInCart.push(Id)
   axios
     .post(url, body, headers)
     .then((res) => {
-      console.log(res.data)
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const addPurchase = (cart, total, navigate) => {
+  const url = "http://localhost:3003/purchase/final";
+  const body = { cart_items: cart, total: total };
+
+  axios
+    .post(url, body, headers)
+    .then((res) => {
+      window.localStorage.setItem("carrinho", JSON.stringify([]));
+      window.localStorage.setItem("total", JSON.stringify(0));
+     alert(res.data)
+      goToShopPage(navigate);
+      window.location.reload(false);
+    })
+    .catch((err) => {
+         console.log(err.response);
     });
 };

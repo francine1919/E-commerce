@@ -1,22 +1,22 @@
-// import axios from "axios";
-// import React, { useEffect, useState } from "react";
-// import { useGet } from "../../Hooks/useGet";
+import React, { useContext } from "react";
+import { capitalize } from "../../Functions/functions";
+import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 
-// export default function ShoppingCard(props) {
-//   const { data, isLoading } = useGet("/stock/" + props.id);
-  
-//   return (
-//     <>
-//       {isLoading ? (
-//         "Loading..."
-//       ) : (
-//         <div>
-//           <p>{data?.name}</p>
-//           <p>{props.qtd}</p>
-//           <p>{props.subtotal}</p>
-//         </div>
-//       )}
-      
-//     </>
-//   );
-// }
+export default function ShoppingCard(props) {
+  const { onAdd } = useContext(GlobalContext);
+  return (
+    <>
+      <div>
+        <img src="https://picsum.photos/200/300" alt="Random images" />
+        <p>{capitalize(props.name.toLowerCase())} </p>
+        <button
+          onClick={() => {
+            onAdd(props.id);
+          }}
+        >
+          Adicionar
+        </button>
+      </div>
+    </>
+  );
+}
