@@ -4,9 +4,9 @@ import { GlobalContext } from "../GlobalContext/GlobalContext";
 
 const GlobalState = (props) => {
   const { data, isLoading } = useGet("/stock/all");
-
   const [isLoaded, setIsLoaded] = useState(false);
   const [total, setTotal] = useState(0);
+
   const onAdd = (produtoId) => {
     let retrievedCartItems = localStorage.getItem("carrinho");
     let cart = JSON.parse(retrievedCartItems);
@@ -17,6 +17,7 @@ const GlobalState = (props) => {
           return {
             ...item,
             prod_qtd: item.prod_qtd + 1,
+            qty_stock: item.qty_stock - 1,
           };
         }
 
@@ -26,12 +27,13 @@ const GlobalState = (props) => {
       setIsLoaded(!isLoaded);
     } else {
       const productToAdd = data?.find((item) => produtoId === item.id);
-      const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
-
+      productToAdd.qty_stock = productToAdd.qty_stock - 1;
+      let newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
       setIsLoaded(!isLoaded);
     }
   };
+
   const onRemove = (produtoId) => {
     let retrievedCartItems = localStorage.getItem("carrinho");
     let cart = JSON.parse(retrievedCartItems);
@@ -46,6 +48,7 @@ const GlobalState = (props) => {
             ...item,
 
             prod_qtd: item.prod_qtd - 1,
+            qty_stock: item.qty_stock + 1,
           };
         }
 
@@ -83,11 +86,7 @@ const GlobalState = (props) => {
     });
   }, [isLoaded]);
 
-  // const headers = {
-  //   headers: { Authorization: localStorage.getItem("token") },
-  // };
-
-  return (
+   return (
     <GlobalContext.Provider
       value={{
         total,
