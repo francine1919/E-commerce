@@ -9,10 +9,10 @@ import ShoppingCart from "./ShoppingCart";
 export default function CartPage() {
   useProtectedPage();
   const navigate = useNavigate();
-   const { total} = useContext(GlobalContext);
+  const { total } = useContext(GlobalContext);
   let cart = localStorage.getItem("carrinho");
   let retrievedCart = JSON.parse(cart);
-
+  // http://localhost:3003/purchase/final
   const cartList = retrievedCart?.map((prod, index) => {
     return (
       <ShoppingCart
@@ -32,7 +32,10 @@ export default function CartPage() {
       <div> Total:R$ {total.toFixed(2)}</div>
       <button
         onClick={() => {
-          addPurchase(navigate);
+          addPurchase(
+            retrievedCart,
+            total
+          );
         }}
       >
         Comprar!

@@ -1,59 +1,45 @@
 import { Authenticator } from "../services/Authenticator";
-import { ShoppingListDatabase } from "../data/ShoppingListDatabase";
+// import { ShoppingListDatabase } from "../data/ShoppingListDatabase";
 import { PurchaseDatabase } from "../data/PurchaseDatabase";
 import { ProductDatabase } from "../data/ProductDatabase";
 
-const shoppingListDatabase = new ShoppingListDatabase();
+// const shoppingListDatabase = new ShoppingListDatabase();
 const authenticator = new Authenticator();
 const purchaseDatabase = new PurchaseDatabase();
 const productDatabase = new ProductDatabase();
 
 export class PurchaseBusiness {
-  calculateTotal = async (token: string): Promise<any> => {
+  addPurchase = async (token: string, total: number, cart: []) => {
     //validating token
     if (!token) {
       throw new Error(
         "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
       );
     }
-
     //get user id through token
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
-    //getting products sums from databank
-    const result = await shoppingListDatabase.getShoppingListSum(id_user);
-
-    //calculating total
-    let total = 0;
-
-    const accumulatedTotal = result?.map((sum: any) => {
-      if (isNaN(sum.sum)) sum.sum = 0;
-      total += sum.sum;
-      return total;
-    });
-
-    //inserting total in databank
-    await purchaseDatabase.addTotal(id_user, total);
-    return total.toFixed(2);
+    await purchaseDatabase.addPurchase(id_user, total, cart);
   };
 
-  decreaseStockQty = async (token: string, id_prod: string): Promise<void> => {
-    //validating token and product id
-    if (!token) {
-      throw new Error(
-        "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
-      );
-    }
-    if (!id_prod) {
-      throw new Error("Por favor insira um id válido.");
-    }
 
-    //get user id through token
-    const tokenInfo = authenticator.getTokenData(token);
-    const id_user = tokenInfo.id;
+  // decreaseStockQty = async (token: string, id_prod: string): Promise<void> => {
+  //   //validating token and product id
+  //   if (!token) {
+  //     throw new Error(
+  //       "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
+  //     );
+  //   }
+  //   if (!id_prod) {
+  //     throw new Error("Por favor insira um id válido.");
+  //   }
 
-    //update qty in stock
-    await productDatabase.decreaseProductQuantityInStock(id_user, id_prod);
-  };
+  //   //get user id through token
+  //   const tokenInfo = authenticator.getTokenData(token);
+  //   const id_user = tokenInfo.id;
+
+  //   //update qty in stock
+  //   await productDatabase.decreaseProductQuantityInStock(id_user, id_prod);
+  // };
 }

@@ -5,8 +5,7 @@ import cors from "cors";
 import { initRouter } from "./routes/initRouter";
 import { productRouter } from "./routes/productRouter";
 import { userRouter } from "./routes/userRouter";
-import { shoppingListRouter } from "./routes/shoppingListRouter";
-import { purchaseRouter } from "./routes/purchaseRouter";
+ import { purchaseRouter } from "./routes/purchaseRouter";
 
 dotenv.config();
 const app = express();
@@ -17,8 +16,8 @@ app.use(cors());
 app.use("/stock", productRouter);
 app.use("", initRouter);
 app.use("/user", userRouter);
-app.use("/shopping", shoppingListRouter);
 app.use("/purchase", purchaseRouter);
+
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
     const address = server.address() as AddressInfo;

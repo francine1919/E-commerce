@@ -15,14 +15,11 @@ export const signUp = (body, navigate) => {
       goToShopPage(navigate);
       window.location.reload(false);
       window.localStorage.setItem("carrinho", JSON.stringify([]));
-
     })
     .catch((err) => {
       alert(` ${err.response.data}`);
     });
 };
-
-
 
 export const addProductToCart = (Id) => {
   const url = `${base_Url}/shopping/add`;
@@ -37,29 +34,30 @@ export const addProductToCart = (Id) => {
     });
 };
 
-export const addPurchase = (navigate) => {
-  const url = `${base_Url}/purchase/total`;
+// export const addPurchase = (navigate) => {
+//   const url = `${base_Url}/purchase/total`;
+
+//   axios
+//     .get(url, headers)
+//     .then((res) => {
+//       goToShopPage(navigate)
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+export const addPurchase = (cart, total) => {
+  const url = "http://localhost:3003/purchase/final";
+  const body = { cart_items: cart, total: total };
 
   axios
-    .get(url, headers)
+    .post(url, body, headers)
     .then((res) => {
-      goToShopPage(navigate)
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
+      console.log(err.response);
     });
 };
-
-// export const addPurchase=(id)=>{
-//  const url = `${base_Url}/shopping/add`;
-//  const body = { user_id_product: id };
-
-//  axios
-//    .post(url, body, headers)
-//    .then((res) => {
-//      console.log(res.data);
-//    })
-//    .catch((err) => {
-//      console.log(err);
-//    });
-//   }
