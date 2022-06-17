@@ -21,16 +21,15 @@ export default function CartPage() {
   //     ></ShoppingCart>
   //   );
   // });
-  let cart = localStorage.getItem("cart");
+  let cart = localStorage.getItem("carrinho");
   let retrievedCart = JSON.parse(cart);
 
-  let totals = 0;
-   retrievedCart.forEach((prod) => {
-     totals += prod.prod_qtd * prod.price;
-     
-   })
+  let totalPurchase = 0;
+  retrievedCart?.forEach((prod) => {
+    totalPurchase += prod.prod_qtd * prod.price;
+  });
   const cartList = retrievedCart?.map((prod, index) => {
-       return (
+    return (
       <ShoppingCart
         key={index}
         name={prod.name}
@@ -45,8 +44,7 @@ export default function CartPage() {
       <Header />
       <div>CartPage</div>
       <div>{cartList}</div>
-      <div> Total:R$ {totals.toFixed(2)}</div>
-      {/* <div> Total:R$ {total?.total}</div> */}
+      <div> Total:R$ {totalPurchase.toFixed(2)}</div>
       <button
         onClick={() => {
           addPurchase(navigate);

@@ -10,6 +10,7 @@ export default function ShopPage() {
   useProtectedPage();
   const { data, isLoading } = useGet("/stock/all");
   const { cart, setCart } = useContext(GlobalContext);
+
   let carrinho = [];
 
   // useEffect(() => {
@@ -31,6 +32,7 @@ export default function ShopPage() {
             prod_qtd: item.prod_qtd + 1,
           };
         }
+    
         return item;
       });
       setCart(newProductsInCart);
@@ -40,36 +42,37 @@ export default function ShopPage() {
       const productToAdd = data?.find((item) => produtoId === item.id);
       const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
       setCart(newProductsInCart);
-       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
+      localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
+      
     }
   };
-  // const onAdd = (produtoId) => {
-  //   const cart=JSON.parse(
-  //     window.localStorage.getItem("carrinho")
-  //   )
-  //   const productsInCart = cart.find((item) => produtoId === item.id);
+  const onRemove = (produtoId) => {
+    const productsInCart = cart?.find(
+      (item) => produtoId === item.id && item.prod_qtd > 0
+    );
+    if (productsInCart) {
+      const newProductsInCart = cart?.map((item) => {
+        if (produtoId === item.id) {
+          return {
+            ...item,
+            prod_qtd: item.prod_qtd - 1,
+          };
+        }
+        
+        return item;
+      });
+      const newProductsInCartFilter = newProductsInCart?.filter((item) => {
+        return item.prod_qtd > 0;
+      });
 
-  //   if (productsInCart) {
-  //     const newProductsInCart = cart.map((item) => {
-  //       if (produtoId === item.id) {
-  //         return {
-  //           ...item,
-  //           prod_qtd: item.prod_qtd + 1,
-  //         };
-  //       }
-  //       return item;
-  //     });
-  //     //setCart(newProductsInCart);
-  //     localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
-  //   } else {
-  //     const productToAdd = data?.find((item) => produtoId === item.id);
-  //     const newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
-  //    // setCart(newProductsInCart);
-  //     localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
-  //   }
-  // };
+      setCart(newProductsInCartFilter);
 
-  const totals = localStorage.getItem("cart");
+      localStorage.setItem("carrinho", JSON.stringify(newProductsInCartFilter));
+
+    }
+  };
+
+  const totals = localStorage.getItem("carrinho");
   const retrievedCart = JSON.parse(totals);
 
   let total = 0;
@@ -88,7 +91,15 @@ export default function ShopPage() {
             onAdd(prod.id);
           }}
         >
-          Adicionar ao carrinho
+          Adicionar
+        </button>
+        
+        <button
+          onClick={() => {
+            onRemove(prod.id);
+          }}
+        >
+        Remover
         </button>
       </div>
     );
@@ -103,6 +114,7 @@ export default function ShopPage() {
       </Link>
       <div> Total: R$ {total}</div>
       <div>{isLoading ? "Loading..." : productList}</div>
+   
     </>
   );
 }
