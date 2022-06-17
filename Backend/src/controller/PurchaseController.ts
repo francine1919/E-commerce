@@ -18,6 +18,21 @@ export class PurchaseController {
       res.status(500).send("Erro. Por favor tente novamente.");
     }
   }
+
+  async getPurchase(req:Request, res:Response){
+ try {
+   const token = req.headers.authorization as string;
+   
+   const result=await purchaseBusiness.getPurchase(token);
+   res.status(201).send(result);
+ } catch (error) {
+   if (error instanceof Error) {
+     return res.status(400).send(error.message);
+   }
+   res.status(500).send("Erro. Por favor tente novamente.");
+ }
+
+  }
   // async decreaseStockQty(req: Request, res: Response) {
   //   try {
   //     const token = req.headers.authorization as string;

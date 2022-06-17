@@ -4,7 +4,6 @@ import { PurchaseDatabase } from "../data/PurchaseDatabase";
 const authenticator = new Authenticator();
 const purchaseDatabase = new PurchaseDatabase();
 
-
 export class PurchaseBusiness {
   addPurchase = async (token: string, total: number, cart: []) => {
     //validating token
@@ -19,7 +18,20 @@ export class PurchaseBusiness {
 
     await purchaseDatabase.addPurchase(id_user, total, cart);
   };
+  getPurchase = async (token: string):Promise<any> => {
+    //validating token
+    if (!token) {
+      throw new Error(
+        "Esse endpoint requer um token que deve ser inserido no headers 'authorization'."
+      );
+    }
+    //get user id through token
+    const tokenInfo = authenticator.getTokenData(token);
+    const id_user = tokenInfo.id;
 
+    const result=await purchaseDatabase.getPurchases(id_user);
+    return result
+  };
 
   // decreaseStockQty = async (token: string, id_prod: string): Promise<void> => {
   //   //validating token and product id
