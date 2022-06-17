@@ -33,7 +33,7 @@ export default function CartPage() {
       <button
         onClick={() => {
           addPurchase(
-            retrievedCart,
+            retrievedCart.toString(),
             total
           );
         }}

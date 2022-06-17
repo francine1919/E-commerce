@@ -1,12 +1,9 @@
 import { Authenticator } from "../services/Authenticator";
-// import { ShoppingListDatabase } from "../data/ShoppingListDatabase";
 import { PurchaseDatabase } from "../data/PurchaseDatabase";
-import { ProductDatabase } from "../data/ProductDatabase";
 
-// const shoppingListDatabase = new ShoppingListDatabase();
 const authenticator = new Authenticator();
 const purchaseDatabase = new PurchaseDatabase();
-const productDatabase = new ProductDatabase();
+
 
 export class PurchaseBusiness {
   addPurchase = async (token: string, total: number, cart: []) => {
