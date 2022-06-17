@@ -12,7 +12,7 @@ export default function CartPage() {
   const { total } = useContext(GlobalContext);
   let cart = localStorage.getItem("carrinho");
   let retrievedCart = JSON.parse(cart);
-  // http://localhost:3003/purchase/final
+
   const cartList = retrievedCart?.map((prod, index) => {
     return (
       <ShoppingCart
@@ -34,7 +34,8 @@ export default function CartPage() {
         onClick={() => {
           addPurchase(
             retrievedCart.toString(),
-            total
+            total,
+            navigate
           );
         }}
       >

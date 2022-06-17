@@ -1,6 +1,6 @@
 import axios from "axios";
 import { base_Url } from "../Constants/base_Url";
-import { goToShopPage } from "../Router/coordinator";
+import { goToHomePage, goToShopPage } from "../Router/coordinator";
 
 export const headers = {
   headers: { Authorization: localStorage.getItem("token") },
@@ -34,27 +34,18 @@ export const addProductToCart = (Id) => {
     });
 };
 
-// export const addPurchase = (navigate) => {
-//   const url = `${base_Url}/purchase/total`;
-
-//   axios
-//     .get(url, headers)
-//     .then((res) => {
-//       goToShopPage(navigate)
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-
-export const addPurchase = (cart, total) => {
+export const addPurchase = (cart, total, navigate) => {
   const url = "http://localhost:3003/purchase/final";
   const body = { cart_items: cart, total: total };
 
   axios
     .post(url, body, headers)
     .then((res) => {
-      console.log(res.data);
+      window.localStorage.setItem("carrinho", JSON.stringify([]));
+      window.localStorage.setItem("total", JSON.stringify(0));
+     alert(res.data)
+      goToShopPage(navigate);
+      window.location.reload(false);
     })
     .catch((err) => {
       console.log(err);

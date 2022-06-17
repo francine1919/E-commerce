@@ -1,11 +1,12 @@
 import { Authenticator } from "../services/Authenticator";
 import { PurchaseDatabase } from "../data/PurchaseDatabase";
+import { ShoppingCartInputDTO } from "../model/ShoppingCart";
 
 const authenticator = new Authenticator();
 const purchaseDatabase = new PurchaseDatabase();
 
 export class PurchaseBusiness {
-  addPurchase = async (token: string, total: number, cart: []) => {
+  addPurchase = async (token: string, input: ShoppingCartInputDTO) => {
     //validating token
     if (!token) {
       throw new Error(
@@ -16,9 +17,9 @@ export class PurchaseBusiness {
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
-    await purchaseDatabase.addPurchase(id_user, total, cart);
+    await purchaseDatabase.addPurchase(id_user, input.total, input.cart_items);
   };
-  getPurchase = async (token: string):Promise<any> => {
+  getPurchase = async (token: string): Promise<any> => {
     //validating token
     if (!token) {
       throw new Error(
@@ -29,8 +30,8 @@ export class PurchaseBusiness {
     const tokenInfo = authenticator.getTokenData(token);
     const id_user = tokenInfo.id;
 
-    const result=await purchaseDatabase.getPurchases(id_user);
-    return result
+    const result = await purchaseDatabase.getPurchases(id_user);
+    return result;
   };
 
   // decreaseStockQty = async (token: string, id_prod: string): Promise<void> => {
