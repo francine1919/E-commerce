@@ -1,32 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Header/Header";
-import { capitalize } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useGet } from "../../Hooks/useGet";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
+import ShoppingCard from "./ShoppingCard";
 
 export default function ShopPage() {
   useProtectedPage();
   const { data, isLoading } = useGet("/stock/all");
-   const { total, onAdd} = useContext(GlobalContext);
-
+  const { total} = useContext(GlobalContext);
   const productList = data?.map((prod) => {
-    return (
-      <div key={prod.id}>
-        <img src="https://picsum.photos/200/300" alt="Random images" />
-        <p>{capitalize(prod.name.toLowerCase())} </p>
-        <button
-          onClick={() => {
-            onAdd(prod.id);
-          }}
-        >
-          Adicionar
-        </button>
-      </div>
-    );
+    return <ShoppingCard key={prod.id} name={prod.name} id={prod.id} />;
   });
-
   return (
     <>
       <Header />
