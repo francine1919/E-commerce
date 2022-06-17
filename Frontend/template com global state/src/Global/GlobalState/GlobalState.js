@@ -7,9 +7,6 @@ const GlobalState = (props) => {
   const [total, setTotal] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [shoppingList, setShoppingList] = useState(undefined);
-  const [cart, setCart] = useState([]);
-
-  window.localStorage.setItem("cart", JSON.stringify(cart));
 
   const headers = {
     headers: { Authorization: localStorage.getItem("token") },
@@ -53,8 +50,6 @@ const GlobalState = (props) => {
         total,
         shoppingList,
         isLoaded,
-        cart,
-        setCart,
       }}
     >
       {props.children}

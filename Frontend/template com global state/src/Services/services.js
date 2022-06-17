@@ -14,6 +14,8 @@ export const signUp = (body, navigate) => {
       alert("Cadastro realizado!");
       goToShopPage(navigate);
       window.location.reload(false);
+      window.localStorage.setItem("carrinho", JSON.stringify([]));
+
     })
     .catch((err) => {
       alert(` ${err.response.data}`);
