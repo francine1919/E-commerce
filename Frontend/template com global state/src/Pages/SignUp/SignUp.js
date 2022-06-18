@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import useForm from "../../Hooks/useForm";
 import { signUp } from "../../Services/services";
+import { ContainerButton, ContainerForm, ContainerSignup } from "./styled";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -23,10 +24,11 @@ export default function SignUp() {
   };
 
   return (
-    <div>
+    <>
       <Header />
+      <ContainerSignup>
       <h1>Cadastre-se</h1>
-      <form onSubmit={onSignUp}>
+      <ContainerForm onSubmit={onSignUp}>
         <p>Nome</p>
         <input
           type="text"
@@ -45,13 +47,13 @@ export default function SignUp() {
           value={form.delivery_date}
           required
         />
-        <div>
+        <ContainerButton>
           <button type={"submit"}>Enviar</button>
           <Link to="/">
             <button>Voltar</button>
           </Link>
-        </div>
-      </form>
-    </div>
+        </ContainerButton>
+      </ContainerForm>
+   </ContainerSignup> </>
   );
 }
