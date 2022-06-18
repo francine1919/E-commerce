@@ -23,23 +23,17 @@ export const ContainerButton = styled.div`
   button {
     margin: 0px 60px;
     align-items: center;
-    /* background-clip: padding-box; */
     background-color: #fa6400;
     border: 1px solid transparent;
     border-radius: 50px;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-    /* box-sizing: border-box; */
     color: #fff;
     cursor: pointer;
-    /* display: inline-flex; */
     font-family: system-ui, -apple-system, system-ui, "Helvetica Neue",
       Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
-    /* justify-content: center; */
     line-height: 1.25;
-    /* min-height: 3rem; */
-    /* position: relative; */
     transition: all 250ms;
     width: 140px;
     height: 150px;
