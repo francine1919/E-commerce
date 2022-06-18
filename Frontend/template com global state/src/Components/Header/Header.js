@@ -6,7 +6,7 @@ export default function Header() {
   const navigate = useNavigate();
   const isTokenSet = localStorage.getItem("token");
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/");
   };
   return (

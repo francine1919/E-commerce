@@ -1,6 +1,6 @@
 import axios from "axios";
 import { base_Url } from "../Constants/base_Url";
-import { goToShopPage } from "../Router/coordinator";
+import { goToHomePage, goToShopPage } from "../Router/coordinator";
 
 export const headers = {
   headers: { Authorization: localStorage.getItem("token") },
@@ -44,7 +44,7 @@ export const addPurchase = (cart, total, navigate) => {
       window.localStorage.setItem("carrinho", JSON.stringify([]));
       window.localStorage.setItem("total", JSON.stringify(0));
      alert(res.data)
-      goToShopPage(navigate);
+      goToHomePage(navigate);
       window.location.reload(false);
     })
     .catch((err) => {
