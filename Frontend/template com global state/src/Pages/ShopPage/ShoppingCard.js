@@ -3,7 +3,8 @@ import { capitalize } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { ContainerCard, ContainerCardInfo } from "./styled";
 export default function ShoppingCard(props) {
-  const { onAdd } = useContext(GlobalContext);
+  const { onAdd, isProductInStock } = useContext(GlobalContext);
+
   return (
     <>
      
@@ -12,13 +13,14 @@ export default function ShoppingCard(props) {
         <ContainerCardInfo>
           <p>{capitalize(props.name.toLowerCase())} </p>
           <p>R$ {props.price}</p>
-          <button
+          {isProductInStock?  <button
             onClick={() => {
               onAdd(props.id);
             }}
           >
             Adicionar
-          </button>
+          </button> : <button>Produto indisponível</button>}
+         
         </ContainerCardInfo>
       </ContainerCard>
   

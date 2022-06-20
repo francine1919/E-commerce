@@ -1,22 +1,25 @@
 import React from "react";
 import { ContainerHeaderLogin } from "./styled";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
   const isTokenSet = localStorage.getItem("token");
   const logout = () => {
-    localStorage.clear();
-    navigate("/");
+    const isLogout = window.confirm("Deseja realmente sair?");
+    if (isLogout) {
+      localStorage.clear();
+      navigate("/");
+    }
   };
   return (
     <div>
       <ContainerHeaderLogin>
-        <p onClick={() => navigate("/")}>Home</p>
+        <button onClick={() => navigate("/")}>Home</button>
 
-        <p onClick={() => navigate("/shop")}>Loja</p>
+        <button onClick={() => navigate("/shop")}>Loja</button>
 
-        {isTokenSet ? <p onClick={() => logout()}>Logout</p> : ""}
+        {isTokenSet ? <button onClick={() => logout()}>Logout</button> : ""}
       </ContainerHeaderLogin>
     </div>
   );

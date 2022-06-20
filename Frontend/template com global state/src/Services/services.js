@@ -7,8 +7,9 @@ export const headers = {
 };
 
 export const signUp = (body, navigate) => {
+  const url=base_Url + "/user/create"
   axios
-    .post(base_Url + "/user/create", body)
+  .post(url, body)
     .then((res) => {
       localStorage.setItem("token", res.data.token);
       alert("Cadastro realizado!");
@@ -35,7 +36,7 @@ export const addProductToCart = (Id) => {
 };
 
 export const addPurchase = (cart, total, navigate) => {
-  const url = "http://localhost:3003/purchase/final";
+  const url = base_Url+"/purchase/final";
   const body = { cart_items: cart, total: total };
 
   axios
@@ -51,3 +52,20 @@ export const addPurchase = (cart, total, navigate) => {
          console.log(err.response);
     });
 };
+export const decreaseStockQty=(idProd,qty_stock, prod_qtd)=>{
+  const url=base_Url+"/purchase/updateQty"
+  let newQtyInStock=qty_stock-prod_qtd
+  const body={
+    qty_stock:newQtyInStock,
+    id:idProd
+  }
+  axios
+    .post(url, body, headers)
+    .then((res) => {
+   console.log(res.data)
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+
+}
