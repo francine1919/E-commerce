@@ -21,19 +21,21 @@ export default function CartPage() {
         qtd={prod.prod_qtd}
         id={prod.id}
         subtotal={prod.price}
+        stock={prod.qty_stock}
       ></ShoppingCart>
     );
   });
   return (
     <>
       <Header />
-      <div>CartPage</div>
+      <div>Minha sacola</div>
+      <p>Meus produtos</p>
       <div>{cartList}</div>
       <div> Total:R$ {total.toFixed(2)}</div>
       <button
         onClick={() => {
           addPurchase(
-            retrievedCart.toString(),
+            JSON.stringify(retrievedCart),
             total,
             navigate
           );

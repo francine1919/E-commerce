@@ -6,14 +6,19 @@ const GlobalState = (props) => {
   const { data, isLoading } = useGet("/stock/all");
   const [isLoaded, setIsLoaded] = useState(false);
   const [total, setTotal] = useState(0);
-
+  const [isProductInStock, setIsProductInStock] = useState(true);
   const onAdd = (produtoId) => {
     let retrievedCartItems = localStorage.getItem("carrinho");
     let cart = JSON.parse(retrievedCartItems);
     const productsInCart = cart?.find((item) => produtoId === item.id);
     if (productsInCart) {
+      cart.map((item)=>{
+        if (item.qty_stock < item.prod_qtd || item.qty_stock=== 0) {
+          return setIsProductInStock(false);
+        } 
+      })
       const newProductsInCart = cart.map((item) => {
-        if (produtoId === item.id) {
+        if (produtoId === item.id && isProductInStock) {
           return {
             ...item,
             prod_qtd: item.prod_qtd + 1,
@@ -25,7 +30,9 @@ const GlobalState = (props) => {
       });
       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
       setIsLoaded(!isLoaded);
-    } else {
+    } 
+   
+    if(!productsInCart&&isProductInStock) {
       const productToAdd = data?.find((item) => produtoId === item.id);
       productToAdd.qty_stock = productToAdd.qty_stock - 1;
       let newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
@@ -86,13 +93,14 @@ const GlobalState = (props) => {
     });
   }, [isLoaded]);
 
-   return (
+  return (
     <GlobalContext.Provider
       value={{
         total,
         isLoading,
         onAdd,
         onRemove,
+        isProductInStock
       }}
     >
       {props.children}
