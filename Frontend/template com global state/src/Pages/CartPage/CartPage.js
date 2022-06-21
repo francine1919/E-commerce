@@ -5,6 +5,7 @@ import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
 import { addPurchase } from "../../Services/services";
 import ShoppingCart from "./ShoppingCart";
+import { ContainerCart, ContainerCartItem, Total } from "./styled";
 
 export default function CartPage() {
   useProtectedPage();
@@ -27,22 +28,20 @@ export default function CartPage() {
   });
   return (
     <>
-      <Header />
-      <div>Minha sacola</div>
-      <p>Meus produtos</p>
-      <div>{cartList}</div>
-      <div> Total:R$ {total.toFixed(2)}</div>
-      <button
-        onClick={() => {
-          addPurchase(
-            JSON.stringify(retrievedCart),
-            total,
-            navigate
-          );
-        }}
-      >
-        Comprar!
-      </button>
+    <Header />
+      <ContainerCart>
+        {/* <h2>Minha sacola</h2> */}
+        <h3>Meus produtos</h3>
+        <div>{cartList}</div>
+        <Total> Total:R$ {total.toFixed(2)}</Total>
+        <button
+          onClick={() => {
+            addPurchase(JSON.stringify(retrievedCart), total, navigate);
+          }}
+        >
+          Comprar!
+        </button>
+      </ContainerCart>
     </>
   );
 }
