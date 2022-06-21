@@ -1,14 +1,17 @@
 import React, { useContext } from "react";
 import { capitalize } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
+import { ContainerCartItem, ContainerCartItemQtd } from "./styled";
 
 export default function ShoppingCart(props) {
   const { onAdd, onRemove } = useContext(GlobalContext);
 
   return (
     <>
-      <div>
-        <p>{capitalize(props.name.toLowerCase())}</p>
+    <ContainerCartItem>
+      <p>{capitalize(props.name.toLowerCase())}</p>
+      <ContainerCartItemQtd>
+        {" "}
         <button
           onClick={() => {
             onAdd(props.id);
@@ -16,16 +19,17 @@ export default function ShoppingCart(props) {
         >
           +
         </button>
-        <p>{props.qtd}</p>
-        <button
-          onClick={() => {
-            onRemove(props.id);
-          }}
+      <span>{props.qtd}</span>
+      <button
+        onClick={() => {
+          onRemove(props.id);
+        }}
         >
-          -
-        </button>
-        <p>Preço unitário: R$ {props.subtotal}</p>
-      </div>
+        -
+      </button>
+        </ContainerCartItemQtd>
+      <p>Preço unitário: R$ {props.subtotal}</p>
+</ContainerCartItem>
     </>
   );
 }
