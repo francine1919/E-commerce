@@ -16,8 +16,8 @@ export const ContainerCart = styled.div`
     text-align: center;
     font-size: 30px;
     margin: 16px;
-color: #fa6400;
-}
+    color: #fa6400;
+  }
   p {
     text-align: center;
     font-weight: lighter;
@@ -62,8 +62,8 @@ export const ContainerCartItem = styled.div`
   flex-direction: column;
   margin: 14px;
   background-color: #fa6400;
-   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;  
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   height: 160px;
   width: 500px;
   border-radius: 40px;
@@ -73,8 +73,10 @@ export const ContainerCartItem = styled.div`
 
 export const ContainerCartItemQtd = styled.div`
   display: flex;
-  justify-content: space-evenly;
-
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+  margin-left: 200px;
   button {
     margin-bottom: 0;
     background-color: #fa6400;
