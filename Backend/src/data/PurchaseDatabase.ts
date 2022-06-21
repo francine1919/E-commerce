@@ -28,17 +28,16 @@ export class PurchaseDatabase extends BaseDatabase {
 
   public async getPurchases(user_id: string) {
     try {
-      // inserting total and cart items
+      // getting total and cart items
       const result = await this.connection(PurchaseDatabase.TABLE_NAME)
         .select("cart_items")
         .where({ user_id: user_id });
       // await this.connection("products").update({ qty_stock: qty_stock }).where({})
-      const shoppingList = result.map((prod) => prod.cart_items);
-      const test= result.find((prod)=>prod.cart_items);
-      console.log(shoppingList);
-       return result;
+     const shoppingList = result.map((prod) => prod.cart_items);
+     const list= JSON.parse(shoppingList[0])
+         return list;
     } catch (err: any) {
-      console.log(err.sqlMessage || err.message);
+  
       throw new Error(err.sqlMessage || err.message);
     }
   }
