@@ -1,1 +1,1 @@
-export const base_Url = "http://localhost:3003";
+export const base_Url = "https://e-commerce-shops.herokuapp.com/";
