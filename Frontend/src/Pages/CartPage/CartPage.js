@@ -48,7 +48,7 @@ export default function CartPage() {
                 decreaseStock();
               }}
             >
-              Comprar!
+              Comprar
             </button>
             <button
               onClick={() => {

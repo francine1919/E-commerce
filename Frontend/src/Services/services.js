@@ -31,6 +31,7 @@ export const addPurchase = (cart, total, navigate) => {
     .then((res) => {
       alert(res.data);
       goToHomePage(navigate);
+      clearStorage();
     })
     .catch((err) => {
       console.log(err.response);
