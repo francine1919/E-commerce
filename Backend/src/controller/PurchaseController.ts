@@ -12,8 +12,6 @@ export class PurchaseController {
         cart_items: req.body.cart_items,
         total: req.body.total,
       };
-      const total = req.body.total;
-      const cart_items = req.body.cart_items;
       await purchaseBusiness.addPurchase(token, input);
       res.status(201).send("Obrigada por comprar com a gente!");
     } catch (error) {
@@ -37,18 +35,4 @@ export class PurchaseController {
       res.status(500).send("Erro. Por favor tente novamente.");
     }
   }
-  // async decreaseStockQty(req: Request, res: Response) {
-  //   try {
-  //     const token = req.headers.authorization as string;
-  //     const id_prod = req.body.id_prod;
-  //     await purchaseBusiness.decreaseStockQty(token, id_prod);
-
-  //     res.status(200).send("Done!");
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       return res.status(400).send(error.message);
-  //     }
-  //     res.status(500).send("Erro. Por favor tente novamente.");
-  //   }
-  // }
 }

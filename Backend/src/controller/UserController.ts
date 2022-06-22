@@ -3,10 +3,10 @@ import { UserBusiness } from "../business/UserBusiness";
 import { UserInputDTO } from "../model/User";
 
 
-const userBusiness = new UserBusiness();
 
 export class UserController {
   async createUser(req: Request, res: Response) {
+    const userBusiness = new UserBusiness();
     try {
       const input: UserInputDTO = {
         username: req.body.username,
