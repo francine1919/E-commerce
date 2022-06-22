@@ -30,3 +30,4 @@ export interface Products {
   name: string;
   qty_stock: number;
 }
+

@@ -41,7 +41,7 @@ export default class ProductController {
       const qty_stock = req.body.qty_stock;
       await productsBusiness.decreaseStockQty(token, id, qty_stock);
 
-      res.status(200).send("Stock decreased.");
+      res.status(200).send("Subtraído do estoque.");
     } catch (error) {
       if (error instanceof Error) {
         return res.status(400).send(error.message);

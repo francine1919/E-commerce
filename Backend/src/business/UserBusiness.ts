@@ -3,10 +3,12 @@ import { Idgenerator } from "../services/IdGenerator";
 import { UserInputDTO } from "../model/User";
 import moment from "moment";
 import { UserDatabase } from "../data/UserDatabase";
-import {verifyExpDate} from "../services/DateCheck"
+
+
 const userDatabase = new UserDatabase();
 const authenticator = new Authenticator();
 const idGenerator = new Idgenerator();
+
 export class UserBusiness {
   createUser = async (input: UserInputDTO): Promise<string> => {
     //validations
@@ -24,9 +26,6 @@ export class UserBusiness {
         "Este nome de usuário já está cadastrado, por favor digite um novo nome de usuário."
       );
     }
-    
-    console.log(verifyExpDate(input.delivery_date as string))
-   //true date in past
 
     //generating id
     const id = idGenerator.generateId();

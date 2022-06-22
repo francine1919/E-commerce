@@ -18,7 +18,6 @@ export class PurchaseDatabase extends BaseDatabase {
           total: total,
         })
         .into(PurchaseDatabase.TABLE_NAME);
-      // await this.connection("products").update({ qty_stock: qty_stock }).where({})
     } catch (err: any) {
       console.log(err.sqlMessage || err.message);
       throw new Error(err.sqlMessage || err.message);
@@ -27,7 +26,7 @@ export class PurchaseDatabase extends BaseDatabase {
 
   public async getPurchases(user_id: string) {
     try {
-      // getting total and cart items
+      // getting cart items
       const result = await this.connection(PurchaseDatabase.TABLE_NAME)
         .select("cart_items")
         .where({ user_id: user_id });
