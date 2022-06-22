@@ -41,26 +41,14 @@ export class ProductDatabase extends BaseDatabase {
     }
   }
 
-  // public async decreaseProductQuantityInStock(
-  //   user_id: string,
-  //   user_id_product: string
-  // ): Promise<void> {
-  //   try {
-  //     //getting product from product database
-  //     const products = await shoppingListDatabase.getProductInShoppingList(
-  //       user_id,
-  //       user_id_product
-  //     );
-
-  //     const qty_stock = await this.getProductById(user_id_product);
-
-  //     //updating table
-  //     await this.connection(ProductDatabase.TABLE_NAME)
-  //       .update({ qty_stock: qty_stock.getQtyStock() - products.getProdQtd() })
-  //       .from(ProductDatabase.TABLE_NAME)
-  //       .where({ id: user_id_product });
-  //   } catch (err: any) {
-  //     throw new Error(err.sqlMessage || err.message);
-  //   }
-  // }
+  public async decreaseStock(id_prod: string, new_prod_qty_stock: number) {
+    try {
+      //updating product table
+      await this.connection("products")
+        .where({ id: id_prod })
+        .update({ qty_stock: new_prod_qty_stock });
+    } catch (err: any) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
 }

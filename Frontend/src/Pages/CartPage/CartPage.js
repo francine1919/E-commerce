@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
-import { addPurchase } from "../../Services/services";
+import { addPurchase, decreaseStock } from "../../Services/services";
 import ShoppingCart from "./ShoppingCart";
 import { ContainerCart, Total } from "./styled";
 
@@ -26,9 +26,10 @@ export default function CartPage() {
       ></ShoppingCart>
     );
   });
+
   return (
     <>
-    <Header />
+      <Header />
       <ContainerCart>
         <h3>Meus produtos</h3>
         <div>{cartList}</div>
@@ -36,6 +37,7 @@ export default function CartPage() {
         <button
           onClick={() => {
             addPurchase(JSON.stringify(retrievedCart), total, navigate);
+            decreaseStock();
           }}
         >
           Comprar!
