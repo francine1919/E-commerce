@@ -1,7 +1,7 @@
 {
-  "name": "tec_test_shopper",
+  "name": "e-commerce",
   "version": "1.0.0",
-  "description": "Teste técnico para a shopper.",
+  "description": "e-commerce",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",

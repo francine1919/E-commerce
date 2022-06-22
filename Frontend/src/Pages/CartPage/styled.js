@@ -24,6 +24,7 @@ export const ContainerCart = styled.div`
     font-size: 18px;
   }
   button {
+   
     margin-bottom: 20px;
     background-color: #fa6400;
     border: 1px inset white;
@@ -56,6 +57,13 @@ export const ContainerCart = styled.div`
       transform: translateY(0);
     }
   }
+`;
+export const ContainerButton = styled.div`
+  flex-direction: row;
+  button {
+    margin:20px
+  }
+  margin: 10px;
 `;
 export const ContainerCartItem = styled.div`
   display: flex;
@@ -110,4 +118,9 @@ export const ContainerCartItemQtd = styled.div`
       transform: translateY(0);
     }
   }
+`;
+export const ContainerEmptyCart = styled.h3`
+  margin-top: 300px;
+  text-align: center;
+  color: #fa6400;
 `;

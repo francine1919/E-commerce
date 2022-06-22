@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
+import { clearStorage } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
 import { addPurchase, decreaseStock } from "../../Services/services";
 import ShoppingCart from "./ShoppingCart";
-import { ContainerCart, Total } from "./styled";
+import {
+  ContainerButton,
+  ContainerCart,
+  ContainerEmptyCart,
+  Total,
+} from "./styled";
 
 export default function CartPage() {
   useProtectedPage();
@@ -30,19 +36,32 @@ export default function CartPage() {
   return (
     <>
       <Header />
-      <ContainerCart>
-        <h3>Meus produtos</h3>
-        <div>{cartList}</div>
-        <Total> Total:R$ {total.toFixed(2)}</Total>
-        <button
-          onClick={() => {
-            addPurchase(JSON.stringify(retrievedCart), total, navigate);
-            decreaseStock();
-          }}
-        >
-          Comprar!
-        </button>
-      </ContainerCart>
+      {retrievedCart.length > 0 ? (
+        <ContainerCart>
+          <h3>Meus produtos</h3>
+          <div>{cartList}</div>
+          <Total> Total:R$ {total.toFixed(2)}</Total>
+          <ContainerButton>
+            <button
+              onClick={() => {
+                addPurchase(JSON.stringify(retrievedCart), total, navigate);
+                decreaseStock();
+              }}
+            >
+              Comprar!
+            </button>
+            <button
+              onClick={() => {
+                clearStorage();
+              }}
+            >
+              Limpar sacola
+            </button>
+          </ContainerButton>
+        </ContainerCart>
+      ) : (
+        <ContainerEmptyCart> Sua sacola está vazia 🛍️ </ContainerEmptyCart>
+      )}
     </>
   );
 }
