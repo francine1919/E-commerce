@@ -77,6 +77,6 @@ Visual Studio Code
 
 ### Autora
 
-[<img src="https://avatars.githubusercontent.com/u/94610559?v=4" width=115><br><sub>Francine FullSTack</sub>](https://github.com/francine1919) 
+[<img src="https://avatars.githubusercontent.com/u/94610559?v=4" width=115><br><sub>Francine Fullstack dev</sub>](https://github.com/francine1919) 
 
 
