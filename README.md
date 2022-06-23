@@ -1,6 +1,6 @@
 # E-commerce
 
-Reositório de uma pequena e-commerce, com integração de backend e frontend.
+Repositório de uma e-commerce, com integração de backend e frontend.
 
 ## :hammer: Funcionalidades do projeto
 - `Funcionalidade 1`: Poder fazer cadastro na E-commerce.
