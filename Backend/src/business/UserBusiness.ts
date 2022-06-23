@@ -34,7 +34,7 @@ export class UserBusiness {
     const isDateInFutureOrCurrent = verifyExpDate(newDateInput);
 
     if (!isDateInFutureOrCurrent) {
-      throw new Error("A data deve ser uma data no futuro ou a data atual.");
+      throw new Error("A data deve ser uma data no futuro.");
     }
     //generating id
     const id = idGenerator.generateId();
