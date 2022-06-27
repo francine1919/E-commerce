@@ -10,7 +10,7 @@ Repositório de uma e-commerce, com integração de backend e frontend.
 - `Funcionalidade 5`: Poder finalizar compra.
 - `Funcionalidade 6`: Poder fazer logout.
 
-### Veja o projeto: [E-commerce](https://classy-mass.surge.sh/)
+### Veja o projeto: [E-commerce](https://frontend-shopper.vercel.app/)
 ### Veja a documentação projeto: [E-commerce](https://documenter.getpostman.com/view/19296644/UzBnrmj6#19221d86-e68d-4fd0-9b86-e25774725e9a%20)
 ### Lista com linguagem, framework e/ou tecnologias usadas
 
