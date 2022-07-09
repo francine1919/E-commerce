@@ -34,9 +34,10 @@ export const addPurchase = (cart, total, navigate) => {
       clearStorage();
     })
     .catch((err) => {
-      console.log(err.response);
+     alert(err.response.data);
     });
 };
+
 export const decreaseStock = () => {
   const decreaseStockQty = (idProd, qty_stock) => {
     const url = base_Url+"/stock/decrease";

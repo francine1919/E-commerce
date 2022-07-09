@@ -15,14 +15,13 @@ export default function SignUp() {
   }, []);
 
   //form
-  const { form, onChangeForm, clearForm } = useForm({
+  const { form, onChangeForm} = useForm({
     username: "",
     delivery_date: "",
   });
   const onSignUp = (e) => {
     e.preventDefault();
     signUp(form, navigate);
-    
   };
 
   return (

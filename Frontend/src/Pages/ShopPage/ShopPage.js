@@ -4,7 +4,7 @@ import Header from "../../Components/Header/Header";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useGet } from "../../Hooks/useGet";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
-import ShoppingCard from "./ShoppingCard";
+import ShoppingCard from "../../Components/ShoppingCard/ShoppingCards"
 import spinner from "../../Assets/images/spinner.gif";
 import { ContainerShoppingCard, ContainerTopShopPage, Spinner } from "./styled";
 export default function ShopPage() {

@@ -11,12 +11,14 @@ const GlobalState = (props) => {
     let retrievedCartItems = localStorage.getItem("carrinho");
     let cart = JSON.parse(retrievedCartItems);
     const productsInCart = cart?.find((item) => produtoId === item.id);
+
+    //add product that is already on cart
     if (productsInCart) {
-      cart.map((item)=>{
-        if (item.qty_stock < item.prod_qtd || item.qty_stock=== 0) {
+      cart.map((item) => {
+        if (item.qty_stock < item.prod_qtd || item.qty_stock === 0) {
           return setIsProductInStock(false);
-        } 
-      })
+        }
+      });
       const newProductsInCart = cart.map((item) => {
         if (produtoId === item.id && isProductInStock) {
           return {
@@ -30,9 +32,9 @@ const GlobalState = (props) => {
       });
       localStorage.setItem("carrinho", JSON.stringify(newProductsInCart));
       setIsLoaded(!isLoaded);
-    } 
-   
-    if(!productsInCart&&isProductInStock) {
+    }
+    //add product to cart for the first time
+    if (!productsInCart && isProductInStock) {
       const productToAdd = data?.find((item) => produtoId === item.id);
       productToAdd.qty_stock = productToAdd.qty_stock - 1;
       let newProductsInCart = [...cart, { ...productToAdd, prod_qtd: 1 }];
