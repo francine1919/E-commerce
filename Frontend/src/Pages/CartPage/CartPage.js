@@ -5,7 +5,7 @@ import { clearStorage } from "../../Functions/functions";
 import { GlobalContext } from "../../Global/GlobalContext/GlobalContext";
 import { useProtectedPage } from "../../Hooks/useProtectedPage";
 import { addPurchase, decreaseStock } from "../../Services/services";
-import ShoppingCart from "./ShoppingCart";
+import ShoppingCart from "../../Components/ShoppingCart/ShoppingCart"
 import {
   ContainerButton,
   ContainerCart,

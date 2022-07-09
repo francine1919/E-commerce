@@ -13,7 +13,6 @@ export const useGet = (path) => {
     try {
       const resp = await axios.get(base_Url + path, header);
       setIsLoading(false);
-      // console.log(resp);
       setData(resp.data);
     } catch (err) {
       setIsLoading(false);
